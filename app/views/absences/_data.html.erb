@@ -1,0 +1,9 @@
+<tr>
+    <td><%= absence.employee.name rescue '' %></td>
+    <td><%= absence.employee.organization.name rescue '' %></td>
+    <td><%= absence.employee.shift.name rescue '' %></td>
+    <td><%= absence.date rescue '' %></td>
+    <td><%= absence.check_in.strftime('%T') rescue '' %></td>
+    <td><%= absence.check_out.strftime('%T') rescue '' %></td>
+    <td><%= absence.overtime rescue '' %></td>
+</tr>

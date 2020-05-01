@@ -1,0 +1,23 @@
+<table class="table no-more-tables table-striped table-hover" id="photo_activity" >
+    <thead>
+        <tr><th style="width:1%" >
+                <div class="checkbox check-default">
+                    <input id="checkbox" type="checkbox" value="1" class="checkall">
+                    <label for="checkbox"></label>
+                </div>
+            </th>
+            <th>Photo Activity</th>
+        </tr>
+    </thead>
+    <tbody id='dataTable' class="searchable">
+        <% if @photo_activities.count > 0 %>
+            <% @photo_activities.each do |photo_activity| %>
+                <%= render 'data', :photo_activity => photo_activity %>
+            <% end %>
+        <% else %>  
+            <tr>
+                <td colspan="5" align="center">No photo_activity data found!</td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,103 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="#" class="active">Photos</a></li>
+  </ul>
+  <div class="page-title">
+    <i class="fa fa-book"></i>
+    <h3>Photos - <span class="semi-bold">Photos</span></h3>
+  </div>
+  <div class="grid simple">
+    <div class="grid-title no-border"></div>
+    <div class="grid-body no-border">
+      <div class="row toolbar-block">
+        <div class="col-md-4">
+          <div class="dataTables_filter" id="example3_filter">
+            <div class="controls">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Record">
+                <span class="input-group-addon ">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="toolbar pull-right" id="toolbar_main">
+            <div class="table-tools-actions">
+              <%= link_to new_photo_path, id: "_new", class: "btn btn-success" do %>
+                Add New <i class="fa fa-plus"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table no-more-tables table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Caption</th>
+            <th>Creation Date</th>
+                <th>Background</th>
+                <th>Division</th>
+                <th>Activity</th>
+                <th>Comment Count</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @photos.each do |p| %>
+                <tr>
+                  <td>
+                    <a class="fancybox-effects-c" href="<%= p.image.url %>" title="<%= p.caption %>"><%= image_tag p.image.url, width: '50px', height: '50px' %></a>
+                  </td>
+                  <td><%= link_to p.caption, photo_path(p.id) %></td>
+                  <td><%= p.created_at.strftime('%Y-%m-%d') %></td>
+                  <td><%= raw p.histories %></td>
+                  <td><%= p.organizations.map(&:name).join(', ') %></td>
+                  <td><%= p.photo_activity.name rescue '' %></td>
+                  <td><%= p.photo_comments.count %></td>
+                  <td>
+                    <%= link_to 'Edit', edit_photo_path(p), {class: "btn btn-primary btn-small"} %>
+                    <%= link_to 'Destroy', p, method: :delete, class: "btn btn-danger btn-small", data: { confirm: 'Are you sure?' } %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="row dataTables_wrapper">
+            <div class="col-md-12">
+              <div class="dataTables_paginate paging_bootstrap pagination">
+                <%= pagination_links(@photos, :params => {:controller => 'photos', :action => 'index'}) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.fancybox').fancybox();
+    $(".fancybox-effects-c").fancybox({
+      wrapCSS: 'fancybox-custom',
+      closeClick: true,
+      openEffect: 'elastic',
+      openSpeed: 150,
+      closeEffect: 'elastic',
+      closeSpeed: 150,
+      helpers: {
+        title: {
+          type: 'inside'
+        },
+        overlay: {
+          css: {
+            'background': 'rgba(83, 78, 78, 0.85)'
+          }
+        }
+      }
+    });
+  });
+</script>

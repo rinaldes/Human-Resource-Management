@@ -1,0 +1,5 @@
+	<li>
+					<%= link_to photos_path, class: "#{"cur" if params[:controller] == "photo"} tip", data: {'toogle' => 'tooltip', 'placement' =>'right'} do %>
+  					<i class="fa fa-envelope"></i> <span class="title"><%= t(:gallery) %></span>
+					<% end %>
+				</li>

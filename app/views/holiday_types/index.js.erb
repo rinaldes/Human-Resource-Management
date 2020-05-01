@@ -1,0 +1,3 @@
+$("#holiday_type_list tbody").html("<%= j(render 'holiday_types', roles: @holiday_types) %>");
+$(".dataTables_wrapper").html("<%= j(render 'layouts/paging', records: @holiday_types, records_count: @holiday_types_count) %>");
+paging()

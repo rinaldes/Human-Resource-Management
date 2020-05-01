@@ -1,0 +1,29 @@
+<% if params[:action] != "update" %>
+    <tr id="data_<%= leave_request.id %>">
+<% end %>
+    <td>
+    	<div class="checkbox check-default">
+            <input id="checkbox<%= leave_request.id %>" type="checkbox" value="<%= leave_request.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= leave_request.id %>"></label>
+        </div>
+    </td>
+    <td><%= leave_request.name %></td>
+    <td><%= leave_request.start_date %></td>
+    <td><%= leave_request.end_date %></td>
+    <td><%= leave_request.reason %></td>
+    <td><%= leave_request.description %></td>
+      <% if leave_request.status == "Pending" %>
+        <td><span class="badge badge-warning"><%= leave_request.status%></span></td>
+      <% elsif leave_request.status == "Approved" %>
+        <td><span class="badge badge-success"><%= leave_request.status%></span></td>
+      <% elsif leave_request.status == "Rejected" %>
+        <td><span class="badge badge-danger"><%= leave_request.status%></span></td>
+      <% else leave_request.status == "Cancelled" %>
+        <td><span class="badge badge-primary"><%= leave_request.status%></span></td>
+      <% end %>
+      <% if @approval_setting.present?  %>
+    <td id="approval_setting"><%= link_to "<i class='fa fa-gear'></i>".html_safe, edit_leave_request_path(leave_request, :for_approval => 1), remote: true %></td>
+    <% end %>
+<% if params[:action] != "update" %>
+    </tr>
+<% end %>

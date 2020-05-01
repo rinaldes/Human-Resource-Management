@@ -1,0 +1,183 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li>
+    <li><a href="konowledge_management.html">Knowledge Management</a></li>
+    <li><a href="#" class="active">Detail</a></li>
+  </ul>
+  <div class="page-title"> 
+    <i class="fa fa-envelope"></i>
+    <h3>Knowledge <span class="semi-bold">Management</span></h3>
+  </div>
+  <section class="row">
+    <div class="col-sm-9">
+      <div class="grid simple">
+        <div class="grid-title no-border knowledge-article">
+          <figure>
+            <%= raw @knowledge.thumbnail_dashboard %>
+          </figure>
+          <h3 class="semi-bold p-l-10"><%= @knowledge.article_name %></h3>
+          <div class="tools">
+            <%= link_to 'Edit', edit_knowledge_path(@knowledge), class: "fa fa-pencil" %>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <form class="gen-form" action="">
+              <div class="form-group">
+                  <div class="controls">
+                      <div class="controls">
+                        <% @knowledge.knowledge_receivers.each do |category| %>
+                          <span class="label label-info"><%= category.category.name %></span>
+                        <% end %>
+                      </div>
+                  </div>
+              </div>
+          </form>
+          <article><%= simple_format (@knowledge.content)%></article>
+          <div class="grid simple">
+            <div class="col-md-6">
+              <div class="row">
+              <div>
+              By <%= @knowledge.user.username %> <%= "at #{@publish_date.strftime('%Y-%m-%d')}" if @publish_date.present? %>
+              </div>
+              <div>
+                Tags:
+          <% @knowledge.tags.map(&:name).each{|tag| %>
+            <%= link_to "##{tag}", knowledges_url(tag: tag)  %>
+          <% } %>
+              </div>
+              <div>
+                Dibaca sebanyak <%= @knowledge.read_count %> kali
+              </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="pull-right">
+                <% 1.upto(5).each{|rate| %>
+          <%= radio_button_tag :rating, rate, @rate == rate, :class => "star rating2" %>
+        <% } %>
+              </div>
+              
+            </div>
+            <div class="col-md-6">
+              <div class="pull-right">
+                Rating this article: <%= @rates.sum/@rates.count rescue 0 %>
+              </div>
+            </div>
+          </div>
+
+            <div id="comment-box" class="col-sm-12">
+                <div id="comment-text">
+                    <% @comments.each{|comment| %>
+                      <%= comment.comment %>
+                      <div id="comment-person">
+                        Comment by <%= "#{comment.user.username} #{time_ago_in_words(comment.created_at)}" %>
+                      </div>
+                    <% } %>
+                </div>
+            </div> 
+        </div>
+    </div>
+  </div>
+    <aside class="col-sm-3 list">
+        <ul class="nav nav-pills" id="tab-4">
+          <li class="active"><a href="#read">Read By</a></li>
+          <li><a href="#not_read">Not Read Yet</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="read">
+                <table class="table table-striped table-flip-scroll cf">
+                    <thead class="cf">
+                        <tr>
+                            <th>#</th>
+                            <th>Employee Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @knowledge_details.each_with_index do |detail, i| %>
+                            <tr>
+                                <td><%= i + 1 %></td>
+                                <td><%= detail.user.name %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="not_read">
+                <table class="table table-striped table-flip-scroll cf">
+                    <thead class="cf">
+                        <tr>
+                <th>#</th>
+                <th>Employee Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @unread_users.each_with_index do |detail, i| %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td><%= detail.full_name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </aside>
+  </section>
+  <%= form_for @knowledge_comment, url: comment_knowledge_path(@knowledge), method: 'PUT' do |f| %>
+    <p>
+      <%= f.text_area :comment, placeholder: "Give your comment", rows: "10", cols: "123",  onkeypress: "return imposeMaxLength(event, this, 160);" %>
+    </p>
+    <p><%= f.submit 'Submit your comment', class: "btn btn-success btn-cons" %></p>
+  <% end %>
+</div>
+<script type="text/javascript">
+  setTimeout(
+    function(){
+      $('input[type=radio].star').rating()
+      $('#rating_1 a').click(function(){
+        give_rate(1)
+      })
+      $('#rating_2 a').click(function(){
+        give_rate(2)
+      })
+      $('#rating_3 a').click(function(){
+        give_rate(3)
+      })
+      $('#rating_4 a').click(function(){
+        give_rate(4)
+      })
+      $('#rating_5 a').click(function(){
+        give_rate(5)
+      })
+    }, 1000
+  );
+
+  function give_rate(i){
+    $.ajax({
+      url: '/knowledges/give_rate',
+      type: 'post',
+      data: {
+        value: i, knowledge_id: '<%= @knowledge.id %>'
+      }
+    })
+  }
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('#img_prev')
+          .attr('src', e.target.result)
+          .width(240)
+          .height(250);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function imposeMaxLength(Event, Object, MaxLen)
+  {
+    return (Object.value.length <= MaxLen)||(Event.keyCode == 8 ||Event.keyCode==46||(Event.keyCode>=35&&Event.keyCode<=40))
+  }
+</script>

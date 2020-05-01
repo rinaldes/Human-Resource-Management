@@ -1,0 +1,13 @@
+<li class="tip " data-toggle="tooltip" data-placement="right" data-original-title="Master Data"> 
+	<a href="#" class=""> <i class="fa fa-th"></i> <span class="title">Master Data </span> </a>
+	<ul class="sub-menu">
+		<% if AttendanceSetting.last.appraisal_setting == "goal_and_value" %>
+			<li class="">
+				<%= link_to goal_values_path, class: (controller_name.downcase=="goal_values" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'goal dan value'} do %>
+					<span class="title" ><%= t(:goal_and_value) %></span>
+				<% end %>
+			</li>
+			<%end%>
+			<% rescue %>
+	</ul>
+</li>

@@ -1,0 +1,1 @@
+$('#goal tbody').prepend("<%= j(render 'appraisal_goal_fields', :appraisal_goals => @appraisal_goals) %>");

@@ -1,0 +1,66 @@
+   <div class="grid simple">
+    <div class="grid-body no-border has-tab">        
+      <div class="tab-content">
+        <section class="tab-pane active">
+          <div class="row toolbar-block">
+            <h4 class="semi-bold col-md-4">
+              <i class="fa fa-check-square"></i> Training History
+            </h4>
+            <div class="col-md-8">
+              <div class="toolbar pull-right">
+                <%= link_to "<span class=\"fa fa-plus\"></span> Add New".html_safe, new_training_history_path(:employee_id => params[:id]), :remote => true, :class => "btn btn-success" %>
+                <%= button_tag "Tools <i class=\"fa fa-angle-down\"></i>".html_safe, :class => "btn btn-default dropdown-toggle", :"data-toggle" => "dropdown" %>
+                <ul class="dropdown-menu pull-right">
+                  <li><%= link_to "Export to CSV", training_histories_path(format: "csv", id: params[:id]) %></li>
+                  <li><%= link_to "Export to Excel", training_histories_path(format: "xls", id: params[:id]) %></li>
+                  <li data-toggle="modal" data-target="#upload_modal"><a>Import from CSV</a></li>
+                </ul>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_upload">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-cloud-upload\"></span> Upload".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#upload_modal" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_training_history">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-edit\"></span> Edit".html_safe, :class => "btn", :onclick => "edit_training_history()", :id => "button_edit_training_history" %>
+                  <%= button_tag "<span class=\"fa fa-trash\"></span> Remove".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#confirm_modal", :id => "button_remove_training_history", :"data-section" => "training_history", :onclick => "set_delete_url('/training_histories/delete')" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table no-more-tables table-striped table-hover" id="training_history">
+            <thead>
+              <tr>
+                <th style="width: 45px" >
+                  <div class="checkbox check-default">
+                    <input id="checkall_training_history" data-section="training_history" data-traininghistory="parent" type="checkbox" value="1" class="checkall parent-training_history">
+                    <label for="checkall_training_history"></label>
+                  </div>
+                </th>
+                <th>Training Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Sponsor</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @training_histories.count != 0 %>
+                <% @training_histories.each do |training_history| %>
+                  <%= render 'training_histories/data', :training_history => training_history%>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan='6' align='center'>No Data Found !</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+    <br class="clear"/>
+  </div>

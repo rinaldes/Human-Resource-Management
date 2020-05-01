@@ -1,0 +1,3 @@
+$("#role_list tbody").html("<%= j(render 'roles', roles: @roles) %>");
+$(".dataTables_wrapper").html("<%= j(render 'layouts/paging', records: @roles, records_count: @roles_count) %>");
+paging()

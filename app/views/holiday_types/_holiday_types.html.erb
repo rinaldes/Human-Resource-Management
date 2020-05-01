@@ -1,0 +1,9 @@
+<% if @holiday_types.count > 0 %>
+  <% @holiday_types.each do |holiday_type| %>
+    <%= render 'data', :holiday_type => holiday_type%>
+  <% end %>
+<% else %>
+  <tr>
+    <td colspan='5' align='center'>No Data Found !</td>
+  </tr>
+<% end %>

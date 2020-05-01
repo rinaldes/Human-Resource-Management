@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to recruitments_path, class: (controller_name.downcase=="recuitments" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Recruitment'} do %>
+					<i class="fa fa-file-text"></i>
+					<span class="title"><%= t(:recuitment) %></span>
+					<% end %>
+				</li>

@@ -1,0 +1,74 @@
+<%= javascript_tag render(:template => 'schedules/jsManager.js', :formats => [:js]) %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="../../schedules">Schedule</a></li>
+    <li><a href="#" class="active">Schedule Detail</a></li>
+  </ul>      
+  <div class="page-title">	
+   	<i class="fa fa-calendar"></i>
+   	<h3>Schedule <span class="semi-bold">Detail</span></h3>	
+  </div>
+  <%= form_for Schedule.find(params[:id]) do |f|%> 
+    <div class="form-group row">
+      <label class="form-label col-sm-2">Periode </label>
+      <div class="controls col-sm-2">            
+        <div class="input-append success date">
+          <%= f.text_field :start_period, class: 'form-control', value: @schedules.start_period %>
+          <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+        </div>
+      </div>
+      <div class="pull-left">to
+      </div>
+      <div class="controls col-sm-2">            
+        <div class="input-append success date">
+          <%= f.text_field :end_period, class: 'form-control', value: @schedules.end_period %>
+          <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="form-label col-sm-2">Shift </label>
+      <div class="controls col-sm-3">            
+        <%= f.select :shift_id, options_for_select(Shift.all.map{|x| [x.name, x.id]}, @schedules.shift_id),{:class => "form-control"} %>
+      </div>
+    </div>
+    <table class="table no-more-tables table-striped table-hover">
+      <thead>
+        <tr>
+          <th style="width:1%"><div class="checkbox check-default">
+            <input id="checkbox" type="checkbox" value="1" class="checkall">
+            <label for="checkbox"></label>
+            </div></th>
+          <th style="width:22%">Employee</th>
+        </tr>
+      </thead> 
+      <tbody>
+      <% if @schedules.employee_id != nil %>
+         <tr> 
+          <td><div class="checkbox check-default">
+            <input type="checkbox" disabled>
+        </div></td>
+          <td><%= @schedules.employee.name %></td>
+        </tr>
+        <% end %>
+        
+      </tbody>                              
+    </table>
+    <section class="add-group col-xs-12">
+              <div class="addform clearfix visiblebutton">
+                
+              </div>   
+              <%= link_to_add_association f, :schedule_details, :"data-association-insertion-method" => "append" do %>  
+                <button class="btn btn-primary" data-addform="">Add Employee <i class="fa fa-plus"></i></button>
+              <% end %>
+              <%= f.fields_for :schedule_details do |schedule_detail| %>
+                <%= render 'schedule_detail_fields', :f => schedule_detail %>
+              <% end %>
+            </section>
+
+    <br><br>
+    <%= f.hidden_field :id, :value => params[:id] %>
+    <%= f.submit class: "btn btn-success"%>
+  <% end %>
+</div>

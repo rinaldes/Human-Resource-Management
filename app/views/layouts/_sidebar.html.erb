@@ -1,0 +1,31 @@
+<div class="page-sidebar mini" id="main-menu"> 
+	<div class="page-sidebar-wrapper scrollbar-dynamic" id="main-menu-wrapper">
+		<div class="user-info-wrapper">
+			<div class="profile-wrapper">
+			<img src="<%= current_user.image_url(:mini) if current_user.image? %>" alt="" data-src="<%= current_user.image_url(:mini) if current_user.image? %>" data-src-retina="<%= current_user.image_url(:mini) if current_user.image? %>" onerror="this.src='/assets/profiles/user_def.png'" width="66" height="66"/>
+			</div>
+			<div class="user-info">
+				<div class="greeting">Welcome</div>
+				<div class="username">
+					<%= current_user.first_name %> <span class="semi-bold"><%= current_user.last_name %></span>
+				</div>
+				<div class="status"></div>
+			</div>
+		</div>
+
+		<% if !current_user.flag_company_dashboard %>
+			<ul>
+				<li class="start">
+					<%= link_to root_path, class: (controller_name.downcase=="dashboards" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Dashboard'} do %>
+						<i class="icon-custom-home"></i>
+						<span class="title" ><%= t(:dashboard) %></span>
+					<% end %>
+				</li>
+				<% @features.each_with_index do |feature, i|%>
+					<%= render "layouts/menu_nav/#{feature.feature_name.name}" %>
+				<% end %>
+			</ul>
+			<% end %>
+			<div class="clearfix"></div>
+		</div>
+	</div>

@@ -1,0 +1,1507 @@
+<div class="container-fluid">
+  <div class="page-title row">
+    <h3 class="text-info col-sm-9 no-padding">
+      <i class="fa fa-angle-right"></i> Update <strong>Messages</strong>
+    </h3>
+    <h3 class="text-info col-sm-3 p-l-30 hidden-sm hidden-xs">
+      <strong><i class="fa fa-quote-right"></i>Motivation</strong>
+    </h3>
+  </div>
+<div id="update-block" class="row">
+    <div class="col-sm-5">
+    <section >
+    <div id="msg-blast-box">
+      <div class="msg-blast ticker">
+        <ul>
+          <% if @first_level.count >= 1 %>
+            <% colour = %w(#2bbbd8 #d74b4b #62868d #7c71ad #475f77) %>
+              <% @first_level.each_with_index do |blast_message, i| %>
+                <li style="background-color: <%= colour[i-5] %>;cursor: pointer;" onclick="window.location='<%= blast_message_url(blast_message) %>'">
+              <div class="img-msg-blast">
+                <img src="<%= blast_message.user.company.com_logo rescue '' %>" class="img-circle" alt="" width="45" height="45">
+              </div>
+              <div class="msg-container">
+                <strong><%= blast_message.name %></strong>
+                <p><%= time_ago_in_words(blast_message.created_at) %></p>
+                <p style="color:#fff;"><%= truncate_blast_message blast_message.message %></p>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+      <% else %>
+        <li id="no-update-message">
+          <p class="muted">
+            <h3>
+              <strong>No Update Message .</strong>
+          </h3>
+        </p>
+      </li>
+    <% end %>
+    </section>
+    <div id="message-navbar" class="row">
+      <div class="col-md-4">
+        <%= link_to new_dashboard_path do %>
+          All Messages <i class="fa fa-arrow-right"></i>
+        <% end %>
+      </div>
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm up">
+          <span class="fa fa-arrow-down" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default btn-sm down">
+          <span class="fa fa-arrow-up" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+  <div class="col-sm-12" style="background-color: #fff; padding-top:8px;">
+    <ul class="nav nav-pills blast" id="tab-4">
+      <li class="lg"><strong>From:</strong></li>
+      <li class="active"><a href="#blast_company">Company</a></li>
+      <li><a href="#blast_division">Division</a></li>
+      <li><a href="#blast_group">Group</a></li>
+    </ul>
+    <div class="tab-content no-background no-margin">
+      <section class="tab-pane active no-padding" id="blast_company">
+        <div class="min-msg">
+          <div class="tiles no-background popular-news">
+            <% if @company_blast_messages.present? %>
+              <% @company_blast_messages.each do |message| %>
+                <div class="p-t-10 m-b-5 b-b b-grey" style="cursor: pointer;overflow: hidden; height: 81.5px" onclick="window.location='<%= blast_message_url(message.blast_message_id) %>'">
+                  <div class="post">
+                    <div class="user-profile-pic-wrapper">
+                      <div style="padding:5px;">
+                        <img class="img-circle" width="45" height="45" src="/assets/profiles/avatar.jpg" alt="" data-src-retina="/assets/profiles/avatar2x.jpg">
+                      </div>
+                    </div>
+                    <div class="info-wrapper inline">
+                      <div class="info text-black ">
+                        <%= raw message.blast_message.message rescue '' %>
+                        <p class="muted small-text"> <%= time_ago_in_words(message.blast_message.created_at) rescue '' %> </p>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              <% end %>
+<!--
+              <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default btn-sm up">
+                  <span class="fa fa-arrow-down" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-sm down">
+                  <span class="fa fa-arrow-up" aria-hidden="true"></span>
+                </button>
+              </div>-->
+            <% else %>
+              <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+                <div class="post">
+                <div class="user-profile-pic-wrapper">
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="info-wrapper">
+                  <div class="info text-black ">
+                  <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          </div>
+        </section>
+        <section class="tab-pane no-padding" id="blast_division">
+        <div class="min-msg">
+          <div class="tiles no-background popular-news">
+          <% if @division_blast_messages.present? %>
+              <% @division_blast_messages.each do |message| %>
+            <div class="p-t-10 m-b-5 b-b b-grey" style="cursor: pointer;" onclick="window.location='<%= blast_message_url(message.blast_message_id) %>'">
+              <div class="post">
+              <div class="user-profile-pic-wrapper">
+                <div style="padding:5px;"> 
+                <img class="img-circle" width="45" height="45" src="/assets/profiles/avatar.jpg" alt="" data-src="/assets/profiles/avatar.jpg" data-src-retina="/assets/profiles/avatar2x.jpg"> 
+                </div>
+              </div>
+              <div class="info-wrapper inline">
+                <div class="info text-black ">
+                <p><a href="#blank"><strong><%= raw message.blast_message.message rescue '' %>.</strong></a></p>
+                      <p class="muted small-text"> <%= time_ago_in_words(message.blast_message.created_at) rescue '' %> </p>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <% end %>
+            <% else %>
+              <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+                <div class="post">
+                <div class="user-profile-pic-wrapper">
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="info-wrapper">
+                  <div class="info text-black ">
+                  <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          </div>
+        </section>
+        <section class="tab-pane no-padding" id="blast_group">
+        <div class="min-msg">
+          <div class="tiles no-background popular-news">
+          <% if @group_blast_messages.present? %>
+              <% @group_blast_messages.each do |message| %>
+            <div class="p-t-10 m-b-5 b-b b-grey" style="cursor: pointer;" onclick="window.location='<%= blast_message_url(message.blast_message_id) %>'">
+              <div class="post">
+              <div class="user-profile-pic-wrapper">
+                <div style="padding:5px;"> 
+                <img class="img-circle" width="45" height="45" src="/assets/profiles/avatar.jpg" alt="" data-src="/assets/profiles/avatar.jpg" data-src-retina="/assets/profiles/avatar2x.jpg"> 
+                </div>
+              </div>
+              <div class="info-wrapper inline">
+                <div class="info text-black ">
+                <p><a href="#blank"><strong><%= message.blast_message.message.html_safe rescue '' %>.</strong></a></p>
+                      <p class="muted small-text"> <%= time_ago_in_words(message.blast_message.created_at) rescue '' %> </p>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+              </div>
+            </div>
+
+            <% end %>
+            <% else %>
+              <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+                <div class="post">
+                <div class="user-profile-pic-wrapper">
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+                <div class="info-wrapper">
+                  <div class="info text-black ">
+                  <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          </div>
+        </section>
+      </div>
+      <!-- <div class="pull-right p-t-5 p-b-5 ">
+        <a href="<%= blast_messages_path %>" class="small-text">
+          All Messages <i class="fa fa-arrow-right"></i>
+        </a>
+      </div>  -->
+                <div>
+              <div  style="padding: 11px 0 11px 0;">
+          &nbsp
+         </div>
+            </div>
+      </div>
+    </div>
+
+  <div class="col-sm-3">
+    <section class="today-quotes">
+      <div class="live-tile slide ha" id="motivation" data-speed="750" data-stack="true" data-delay="6000" data-initdelay="6000" data-mode="carousel">
+        <% if @second_level.count >= 1 %>
+        <% @second_level.each do |blast_message| %>
+          <div class="slide-front ha tiles motivation_message" style="cursor: pointer;background-image: url(<%= blast_message.image %>)" onclick="window.location='<%= blast_message_url(blast_message.id) %>'">
+            <%= hidden_field_tag "motivation_message#{blast_message.id}", blast_message.background_color %>
+            <div class="overlayer fullwidth">
+              <div class="overlayer-wrapper">
+                <div class=" p-l-20 p-r-20 p-b-20 p-t-20">
+                  <h4 class="text-white semi-bold no-margin"><%= raw blast_message.message %></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div id="quotes-box" class="slide-front ha tiles" style="background-color : #48D1CC;">
+            <div class="overlayer fullwidth">
+              <div class="overlayer-wrapper">
+                <div class=" p-l-20 p-r-20 p-b-20 p-t-20">
+                    <h4 class="text-white semi-bold no-margin">There's no motivation here!!</h4>
+                  </div>
+              </div>
+            </div>
+        </div>
+      <% end %>
+      </div>
+      </section>
+  </div>
+
+  <div class="clear"></div>
+    
+    <section class="col-sm-12">
+      <div class="newsticker_wrapper">
+        <div class="newsticker_title">
+          <h4>The Latest</h4>
+        </div>
+        <% if @news_tickers.present? %>
+          <ul id="newsticker_1" class="newsticker">
+            <% @news_tickers.each{|news| %>
+              <li><span class="label label-info"><%= news.article_name %></span> <%= content_only news.content %></li>
+            <% } %>
+            <%= raw("<li><span class='label label-info'>#{@news_tickers.first.article_name}</span>#{content_only @news_tickers.first.content}</li>") if @news_tickers.size < 2 %>
+          </ul>
+        <% end %>
+      </div>
+    </section>
+  </div>
+  <div class="separator-main-block"></div>
+  <div class="page-title clearfix">
+    <h3 class="text-danger">
+      <i class="fa fa-angle-right"></i> <strong>News</strong> and <strong>Article</strong>
+    </h3>
+    <ul class="category-news clearfix" id="tab-5">
+      <li><a href="#hot-news" class="cur" onclick="$('.cur').removeClass('cur');$(this).addClass('cur')">Hot News</a></li>
+      <% %w(Business Lifestyle Education Technology Entertainment).each{|news| %>
+        <li><a href="#<%= news.downcase %>" class="<%= news.downcase %>" onclick="$('.cur').removeClass('cur');$(this).addClass('cur')"><%= news %></a></li>
+      <% } %>
+    </ul>
+    <a class="pull-right semi-bold go-all-item text-danger" href="<%= knowledges_path %>">
+      All News <span class="fa fa-arrow-right"></span>
+    </a>
+  </div>
+  <section class="row flex-block" id="news_article">
+    <!-- Article Static -->
+    <div class="col-sm-3">
+      <div class="tiles overflow-hidden full-height tiles-overlay-hover widget-item widget-news">
+        <% if @first_hot_news %>
+          <div class="overlayer bottom-left fullwidth">
+            <div class="overlayer-wrapper"></div>
+          </div>
+          <figure>
+            <figcaption><i class="fa fa-play-circle-o"></i></figcaption><%= raw @first_hot_news.medium_dashboard %>
+          </figure>
+          <%= raw @first_hot_news.content %>
+          <br />
+          <div class="user-comment-wrapper">
+            <div class="profile-wrapper">
+              <img src="/assets/profiles/avatar_small.jpg" alt="" width="35" height="35">
+            </div>
+            <div class="comment">
+              <div class="user-name"><span class="bold"> <%= @first_hot_news.user.full_name %></span> </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Article Ticker -->
+    <div class="tab-content no-background no-margin col-sm-6">
+      <div style="position: relative; height: 200px; overflow: hidden;" class="tab-pane active no-padding ticker" id='hot-news'>
+        <ul style="margin: 0px; position: absolute; top: 0px;">
+          <% if @hot_news.present? %>
+            <% @hot_news.each{|hot_news| %>
+              <li class="tiles overflow-hidden tiles-overlay-hover m-b-15 widget-item article-news news-list">
+                <span class="badge-triangle <%= KnowledgeDetail.find_by_knowledge_id_and_user_id(hot_news.id, current_user.id) ? 'done' : 'new' %>"></span>
+
+                <!-- Helper ruby untuk memanggil thumbnails apa ya? -->
+                <figure><%= raw hot_news.thumbnail_dashboard %></figure> 
+                  <div class="descriptive clickable">
+                    <strong><a href="<%= knowledge_path hot_news %>"><%= hot_news.article_name %></a></strong>
+                  </div>
+                  <div class="descriptive clickable">
+                    <a href="<%= knowledge_path hot_news %>"><%= raw truncate_article hot_news.content, 63 %></a>
+                  </div>
+                  <!-- <div class="user-comment-wrapper">
+                    <div class="profile-wrapper"> <img src="/assets/profiles/avatar_small2x.jpg" width="35" height="35"> </div>
+                    <div class="comment">
+                      <div class="user-name"><span class="bold"> David</span> Cooper </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div> -->
+              </li>
+            <% } %>
+          <% else %>
+            <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+              <div class="post">
+              <div class="user-profile-pic-wrapper">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+              <div class="info-wrapper">
+                <div class="info text-black ">
+                <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="clearfix"></div>
+              </div>
+            </div>
+          <% end %>
+        </ul>
+      </div>
+      <% %w(Business Lifestyle Education Technology Entertainment).each{|news| %>
+        <div style="position: relative; height: 200px; overflow: hidden;" class="tab-pane no-padding ticker" id='<%= news.downcase %>'>
+          <ul style="margin: 0px; position: absolute; top: 0px;">
+            <% if @knowledges[news].present? %>
+              <% @knowledges[news].each{|hot_news| %>
+                <li style="margin: 5px; display: list-item;" class="tiles overflow-hidden tiles-overlay-hover m-b-15 widget-item widget-news news-list">
+                  <span class="badge-triangle <%= KnowledgeDetail.find_by_knowledge_id_and_user_id(hot_news.id, current_user.id) ? 'done' : 'new' %>"></span>
+                  <figure><%= raw @new_news.thumbnail_dashboard %></figure>
+                  <article>
+                    <div class="descriptive clickable">
+                      <h4><a href="<%= knowledge_path hot_news %>"><%= raw truncate_article hot_news.content, 63 %></a></h4>
+                    </div>
+                    <div class="user-comment-wrapper">
+                      <div class="profile-wrapper"> <img src="/assets/profiles/avatar_small2x.jpg" width="35" height="35"> </div>
+                      <div class="comment">
+                        <div class="user-name"><span class="bold"> David</span> Cooper </div>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </article>
+                </li>
+              <% } %>
+            <% else %>
+              <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+                <div class="post">
+                  <div class="user-profile-pic-wrapper">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                  </div>
+                  <div class="info-wrapper">
+                    <div class="info text-black ">
+                      <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div>
+            <% end %>
+          </ul>
+        </div>
+      <% } %>
+      <div class="row m-t-5">
+        <div class="col-md-4">
+          <%= link_to knowledges_path do %>
+            All News <i class="fa fa-arrow-right"></i>
+          <% end %>
+        </div>
+        <div class="col-md-8">
+          <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default btn-sm up_hot_news">
+              <span class="fa fa-arrow-down" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-sm down_hot_news">
+              <span class="fa fa-arrow-up" aria-hidden="true"></span>
+            </button>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="tiles overflow-hidden full-height tiles-overlay-hover widget-item widget-news">
+          <% if @first_hot_news %>
+            <span class="badge-triangle new"></span>
+            <div class="overlayer bottom-left overlayer-fullwidth">
+              <div class="overlayer-wrapper overlayer-fullwidth"></div>
+            </div>
+            <figure><%= raw @new_news.medium_dashboard %> </figure>
+            <%= raw truncate_article @new_news.content, 67 %>
+            <br />
+            <div class="user-comment-wrapper">
+              <div class="profile-wrapper">
+                <img src="/assets/profiles/avatar_small.jpg" width="35" height="35">
+              </div>
+              <div class="comment">
+                <div class="user-name"><span class="bold"> <%= @new_news.user.full_name %></span> </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+       </section>
+       <div class="separator-main-block"></div>
+       <div class="page-title">
+         <h3 class="text-warning"><i class="fa fa-angle-right"></i> <strong>Gallery</strong> and <strong>Photo</strong></h3>
+         <ul class="category-news clearfix">
+           <li><a href="#" class="text-warning">Sort By:</a></li>
+           <li><a href="#">Name</a></li>
+           <li><a href="#">Views</a></li>
+           <li><a href="#">Date</a></li>
+         </ul>
+       </div>
+          <section class="gallery">
+          <br/>
+
+              <!-- START GALLERY ITEM -->
+              <div class="gallery-item first" data-width="1" data-height="1">
+                <!-- START PREVIEW -->
+                <img src="<%= @photos.first.file rescue '' %>" alt="" class="image-responsive-height">
+                <!-- END PREVIEW -->
+                <!-- START ITEM OVERLAY DESCRIPTION -->
+                <div class="overlayer bottom-left overlayer-fullwidth">
+                  <div class="overlayer-wrapper item-info overlayer-fullwidth overlayer-backgorund">
+                    <div class="gradient-grey p-l-20 p-r-20 p-t-20 p-b-5">
+                      <div class="">
+                        <p class="pull-left bold text-white fs-14 p-t-10"><%= @photos.first.caption rescue '' %></p>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="m-t-10">
+                        <div class="thumbnail-wrapper d32 circular m-t-5">
+                          <img width="40" height="40" src="<%= @photos.first.file rescue '' %>" data-src="<%= @photos.first.file rescue '' %>" data-src-retina="<%= @photos.first.file rescue '' %>" alt="">
+                        </div>
+                        <div class="inline m-l-10">
+                          <p class="no-margin text-white fs-12">by Alex Nester</p>
+                          <p class="rating">
+                            <i class="fa fa-star rated"></i>
+                            <i class="fa fa-star rated"></i>
+                            <i class="fa fa-star rated"></i>
+                            <i class="fa fa-star rated"></i>
+                            <i class="fa fa-star"></i>
+                          </p>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- END PRODUCT OVERLAY DESCRIPTION -->
+              </div>
+              <!-- END GALLERY ITEM -->
+
+              <!-- START GALLERY ITEM -->
+              <div class="gallery-item " data-width="2" data-height="2">
+                <!-- START PREVIEW -->
+                <div class="live-tile slide" id="dashboard_gallery" data-speed="750" data-delay="4000" data-mode="carousel">
+                  <%= render 'photos' %>
+                </div>
+                <!-- END PREVIEW -->
+              </div>
+              <!-- END GALLERY ITEM -->
+
+              <% 1.upto(4).each{|i| %>
+                <% break if @photos[i].blank? %>
+                <!-- START GALLERY ITEM -->
+                <div class="gallery-item " data-width="1" data-height="1">
+                  <!-- START PREVIEW -->
+                  <img src="<%= @photos[i].image %>" alt="" class="image-responsive-height">
+                  <!-- END PREVIEW -->
+                  <!-- START ITEM OVERLAY DESCRIPTION -->
+                  <div class="overlayer bottom-left overlayer-fullwidth">
+                    <div class="overlayer-wrapper item-info overlayer-fullwidth overlayer-backgorund">
+                      <div class="gradient-grey p-l-20 p-r-20 p-t-20 p-b-5">
+                        <div class="">
+                          <p class="pull-left bold text-white fs-14 p-t-10"><%= @photos[i].caption %></p>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="m-t-10">
+                          <div class="thumbnail-wrapper d32 circular m-t-5">
+                            <img width="40" height="40" src="/assets/profiles/avatar.jpg" data-src="/assets/profiles/avatar.jpg" data-src-retina="/assets/profiles/avatar2x.jpg" alt="">
+                          </div>
+                          <div class="inline m-l-10">
+                            <p class="no-margin text-white fs-12">by Alex Nester</p>
+                            <p class="rating">
+                              <i class="fa fa-star rated"></i>
+                              <i class="fa fa-star rated"></i>
+                              <i class="fa fa-star rated"></i>
+                              <i class="fa fa-star rated"></i>
+                              <i class="fa fa-star"></i>
+                            </p>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- END PRODUCT OVERLAY DESCRIPTION -->
+                </div><!-- END GALLERY ITEM -->
+              <% } if @photos.present? %>
+            </section><!-- END CATEGORY -->
+        <div class="separator-main-block"></div>
+        <div class="page-title row">
+      <h3 class="no-padding text-success col-md-9"><i class="fa fa-angle-right"></i> KPI <strong>Performance</strong> </h3>
+      <ul class="nav nav-pills col-md-3 success" id="tab-5">
+        <li class="bold pull-right" onclick="$('#kpi_division').removeClass('kpi-init')"><a href="#kpi_division">DIVISION</a></li>
+        <li class="active pull-right big-text bold"><a href="#kpi_personal">PERSONAL</a></li>
+      </ul>
+    </div>
+        <div class="tab-content no-margin no-background">
+      <section class="tab-pane active no-padding" id="kpi_personal">
+        <div class="row" id="KPI-block">
+          <section class="col-md-8">
+            <div class="row tiles-container tiles white">
+            <div class="tile-more-content col-md-4 col-sm-4 no-padding">
+            <div class="tiles green">
+              <div class="tiles-body">
+              <div class="heading"> KPI <strong>Statistical</strong> </div>
+              <p>Total KPI : <strong class="badge badge-danger">85</strong> </p>
+              </div>
+              <div class="tile-footer">
+              <div class="iconplaceholder"><i class="fa fa-calendar"></i></div>
+              Last updated: <strong>2 May 2015</strong> </div>
+            </div>
+            <div class="tiles-body" >
+              <ul class="progress-list" >
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Learning</div>
+                <div class="description">Lorem ipsum dolor</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="89" data-animation-duration="800">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius" >
+                <div class="progress-bar progress-bar-success animate-progress-bar" data-percentage="89%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Team Work</div>
+                <div class="description">Duis autem vel eum</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="45" data-animation-duration="600">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius ">
+                <div class="progress-bar progress-bar-warning animate-progress-bar" data-percentage="45%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Discipline</div>
+                <div class="description">Nulla Facilisis</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="12" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-danger animate-progress-bar" data-percentage="12%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Self Development</div>
+                <div class="description">Claritas est etiam</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="85" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-info animate-progress-bar" data-percentage="85%" ></div>
+                </div>
+              </li>
+              </ul>
+            </div>
+            </div>
+            <div class="tiles white col-md-8 col-sm-8 no-padding">
+            <div class="tiles-chart">
+              <div class="tiles-body">
+              <div class="tiles-title text-black">Weekly Performance Progress</div>
+              <div class="heading"> 85.23 <i class="fa fa-check-circle"></i> </div>
+              </div>
+              <div class="dahsboard-chart" style="height:520px">
+                <div id="line-example"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            </div>
+          </div>
+          </section>
+          <section class="col-md-4">
+            <div class="tiles green2" >
+              <div class="tiles-body">
+                <h4 class="text-white">Work Hours <span class="semi-bold">This week</span></h4>
+                <div class="m-t-30">
+                <div class="widget-stats">
+                  <div class="wrapper"> <span class="item-title">Total telat</span> <span class="item-count animate-number semi-bold text-danger" data-value="30" data-animation-duration="700">0</span> Menit</div>
+                </div>
+                <div class="widget-stats">
+                  <div class="wrapper"> <span class="item-title">Total jam kerja</span> <span class="item-count animate-number semi-bold" data-value="10" data-animation-duration="700">0</span> Jam</div>
+                </div>
+                <div class="widget-stats ">
+                  <div class="wrapper last"> <span class="item-title">Kurang jam kerja</span> <span class="item-count animate-number semi-bold" data-value="20" data-animation-duration="700">0</span> Menit</div>
+                </div>
+                <hr />
+                <div class="description"> <span class="text-white mini-description ">4% higher <span class="blend">than last month</span></span></div>
+                </div>
+              </div>
+              <div id="absence_chart" style="height:123px"> </div>
+              </div>
+              
+              <div class="tiles green m-t-20">
+              <div class="tiles-body">
+                <h4 class="text-white">Absence and Leave <strong>This Year</strong> </h4>
+                   <div class="widget-stats">
+                    <div class="wrapper transparent"> 
+                    <span class="item-title">Cuti yang diambil </span> <span class="item-count animate-number semi-bold" data-value="10" data-animation-duration="700">0</span>
+                    </div>
+                  </div>
+                  <div class="widget-stats">
+                    <div class="wrapper transparent">
+                    <span class="item-title">Sisa jatah cuti</span> <span class="item-count animate-number semi-bold" data-value="5" data-animation-duration="700">0</span> 
+                    </div>
+                  </div>
+                  <div class="progress transparent progress-small no-radius m-t-30" style="width:90%">
+                    <div class="progress-bar progress-bar-white animate-progress-bar" data-percentage="64.8%" ></div>
+                  </div>
+                </div>      
+              </div>
+          </section>
+        </div>
+      </section>
+      
+      
+      <section class="tab-pane active kpi-init no-padding" id="kpi_division">
+        <div class="row" id="KPI-block2">
+          <section class="col-sm-12">
+            <div class="row tiles-container tiles white">
+            <div class="tile-more-content col-md-4 col-sm-4 no-padding">
+            <div class="tiles green">
+              <div class="tiles-body">
+              <div class="heading"> KPI <strong>Statistical</strong> </div>
+              <p>Total KPI : <strong class="badge badge-danger">85</strong> </p>
+              </div>
+              <div class="tile-footer">
+              <div class="iconplaceholder"><i class="fa fa-calendar"></i></div>
+              Last updated: <strong>2 May 2015</strong> </div>
+            </div>
+            <div class="tiles-body" >
+              <ul class="progress-list" >
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Learning</div>
+                <div class="description">Lorem ipsum dolor</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="89" data-animation-duration="800">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius" >
+                <div class="progress-bar progress-bar-success animate-progress-bar" data-percentage="89%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Team Work</div>
+                <div class="description">Duis autem vel eum</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="45" data-animation-duration="600">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius ">
+                <div class="progress-bar progress-bar-warning animate-progress-bar" data-percentage="45%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Discipline</div>
+                <div class="description">Nulla Facilisis</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="12" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-danger animate-progress-bar" data-percentage="12%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <div class="name">Self Development</div>
+                <div class="description">Claritas est etiam</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="85" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-info animate-progress-bar" data-percentage="85%" ></div>
+                </div>
+              </li>
+              </ul>
+            </div>
+            </div>
+            <div class="tiles white col-md-8 col-sm-8 no-padding">
+            <div class="tiles-chart">
+              <div class="tiles-body">
+              <div class="tiles-title text-black">Weekly Performance Progress</div>
+              <div class="heading"> 85.23 <i class="fa fa-check-circle"></i> </div>
+              </div>
+              <div class="dahsboard-chart" style="height:520px">
+                <div id="line-example2"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            </div>
+          </div>
+          </section>
+        </div>
+      </section>
+    </div>
+    
+    <div class="separator-main-block"></div>
+        <div class="page-title row">
+      <h3 class="no-padding text-purple col-md-8"><i class="fa fa-angle-right"></i>About <strong>Me</strong></h3>
+    </div>
+    <section class="me-group">
+      <div class="row" id="me">
+      <div class="col-md-3">
+        <section class="me-wrap zodiac clearfix">
+          <div class="col-xs-6 z-type no-paddding">
+            <img src="/assets/z/Taurus.png" alt="taurus" />
+            <span><strong>TAURUS</strong> <em class="small-text">2 May</em></span>
+            <nav class="z-pagination">
+              <ul>
+                <li><i class="fa fa-dollar"></i></li>
+                <li><i class="fa fa-plus-square"></i></li>
+                <li class="cur"><i class="fa fa-briefcase"></i></li>
+                <li><i class="fa fa-male"></i></li>
+                <li><i class="fa fa-users"></i></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="col-xs-6 no-padding">
+            <section class="z-message">
+              <div class="live-tile slide flip-list" id="zodiac_message" data-speed="750" data-delay="10000" data-initdelay="4000" data-stack="true" data-mode="carousel">
+              
+                <div class="slide-back tiles" id="z1">
+                  <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Lorem ipsum dolor sit amet</span>, consectetuer adipiscing elit, sed diam
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z2">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-front tiles" id="z3">
+                  <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Nam liber tempor</span>,  nihil imperdiet doming id quod mazim placerat facer possim assum.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z4">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z5">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z6">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Mirum est notare quam</span>, Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+              
+              </div>
+            </section>
+          </div>  
+        </section>
+      </div>
+      
+      <div class="col-md-6">
+        <section class="me-wrap expanded blood clearfix">
+          <div class="col-xs-6 b-type no-paddding">
+            <h2>AB</h2>
+          </div>
+          <div class="col-xs-6 no-padding">
+            <section class="z-message">
+              <div class="live-tile slide flip-list" id="blood_message" data-speed="750" data-delay="10000" data-initdelay="4000" data-stack="true" data-mode="carousel">
+              
+                <div class="slide-back tiles" id="z1">
+                  <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Lorem ipsum dolor sit amet</span>, consectetuer adipiscing elit, sed diam
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z2">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-front tiles" id="z3">
+                  <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Nam liber tempor</span>,  nihil imperdiet doming id quod mazim placerat facer possim assum.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z4">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z5">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Ut wisi enim ad minim veniam</span>, vel eum iriure dolor in hendrerit in vulputate velit esse.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+                
+                <div class="slide-back tiles" id="z6">
+                    <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Mirum est notare quam</span>, Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+              
+              </div>
+            </section>
+          </div>  
+        </section>
+      </div>
+      
+      <div class="col-md-3">
+        <section class="me-wrap aboutme isjf clearfix">
+          <div class="col-xs-6 z-type no-paddding">
+            <span class="char isjf"></span>
+          </div>
+          <div class="col-xs-6 no-padding">
+            <section class="z-message">
+              <div class="live-tile slide flip-list" id="zodiac_message" data-speed="750" data-delay="10000" data-initdelay="4000" data-stack="true" data-mode="carousel">
+                <div class="slide-back tiles" id="z1">
+                  <i class="fa fa-quote-left before"></i>
+                  <h4 class="text-white custom-line-height m-b-10">
+                    <span class="bold">Lorem ipsum dolor sit amet</span>, consectetuer adipiscing elit, sed diam
+                  </h4>
+                  <i class="fa fa-quote-right after"></i>
+                </div>
+              </div>
+              <div class="tile-footer">
+                <a href="#">Take survey again <i class="fa fa-arrow-circle-o-right"></i></a>
+              </div>
+            </section>
+          </div>  
+        </section>
+      </div>
+     </div>
+      
+      <div class="row" id="me2">
+      <div class="bio-filter clearfix">
+        <div class="col-sm-4 no-padding">
+          <span class="lb text-purple">Calculate Biorhythms</span>
+          <select class="size-auto">
+            <option>January</option>
+            <option>Febuary</option>
+            <option>Maret</option>
+            
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            
+            <option>July</option>
+            <option>Augustus</option>
+            <option>September</option>
+            
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </select>
+          <select class="size-auto">
+            <option>2016</option>
+            <option>2015</option>
+            <option>2014</option>
+            <option>2013</option>
+            <option>2012</option>
+            <option>2011</option>
+          </select>
+        </div>
+        <div class="col-sm-8">
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            
+            <li>11</li>
+            <li>12</li>
+            <li>13</li>
+            <li>14</li>
+            <li>15</li>
+            <li>16</li>
+            <li>17</li>
+            <li>18</li>
+            <li>19</li>
+            <li>20</li>
+            
+            <li>21</li>
+            <li>22</li>
+            <li>23</li>
+            <li>24</li>
+            <li>25</li>
+            <li>26</li>
+            <li>27</li>
+            <li>28</li>
+            <li>29</li>
+            <li>30</li>
+          </ul>
+          <input type="text"  data-slider-value="[2,10]" data-slider-step="1" data-slider-max="30" data-slider-min="1" value="" class="slider-element form-control" data-slider-selection="after">
+        </div>
+      </div>
+      
+      <section class="col-sm-12">
+        <ul class="nav nav-pills blast purple bio-tab" id="tab-6">
+          <li class="active"><a href="#bio_one">Classic Circle</a></li>
+          <li><a href="#bio_two" onclick="$('#bio_two').removeClass('kpi-init')">Additional Circle</a></li>
+          <li><a href="#bio_three" onclick="$('#bio_three').removeClass('kpi-init')">Secondary Circle</a></li>
+        </ul>
+        
+        <div class="tab-content no-background  no-margin">
+          <section class="tab-pane active no-padding" id="bio_one">
+            <div class="tiles white p-l-10 p-r-10 p-t-10 p-b-30">
+              <div id="bio_classic" class="m-l-10 m-r-10" style="width:100%; height:400px;"></div>  
+            </div>
+          </section>
+          <section class="tab-pane active no-padding kpi-init" id="bio_two">
+            <div class="tiles white p-l-10 p-r-10 p-t-10 p-b-30">
+              <div id="bio_add" class="m-l-10 m-r-10" style="width:100%; height:400px;"></div>  
+            </div>
+          </section>
+          <section class="tab-pane active no-padding kpi-init" id="bio_three">
+            <div class="tiles white p-l-10 p-r-10 p-t-10 p-b-30">
+              <div id="bio_second" class="m-l-10 m-r-10" style="width:100%; height:400px;"></div> 
+            </div>
+          </section>
+        </div>  
+      </section>
+     </div> 
+      
+    </section>
+     
+     
+     
+    
+    
+    
+    <div class="separator-main-block"></div>
+        <div class="page-title row">
+      <h3 class="no-padding text-info col-md-8"><i class="fa fa-angle-right"></i> <strong>Employee</strong> Statistic</h3>
+      <!--<ul class="nav nav-pills col-md-4 info" id="tab-5">
+        <li class="bold pull-right" onclick="$('#emp_all').removeClass('kpi-init')"><a href="#emp_all">ALL EMPLOYEE</a></li>
+        <li class="bold pull-right" onclick="$('#emp_gender').removeClass('kpi-init')"><a href="#emp_gender">EMPLOYEE BY GENDER</a></li>
+        <li class="active pull-right bold"><a href="#emp_leave">SICK AND LEAVE</a></li>
+      </ul>-->
+    </div>
+        <div class="tab-content no-margin no-background">
+      <section class="tab-pane active no-padding" id="emp_leave">
+        <div class="row" id="EMP-block">
+          <section class="col-sm-12">
+          <div class="row tiles-container tiles white">
+            <div class="tile-more-content col-md-3 no-padding">
+            
+            <div class="tiles blue">
+              <div class="tiles-body"style="padding-bottom: 17px;">
+              <div class="heading">  <strong>Today</strong> Leave</div>
+              <p>Total Leave  Today:
+                <strong class="badge badge-danger">10</strong>
+                <i class="fa fa-users"></i>
+              </p>
+              </div>
+              <div class="tile-footer">
+              <div class="iconplaceholder"><i class="fa fa-calendar"></i></div>
+              Last updated: <strong>11:34 AM</strong> </div>
+            </div>
+            
+            <div class="tiles-body tiles grey">
+              <ul class="progress-list" >
+              <li>
+                <div class="details-wrapper">
+                <a href="detail_leave.html" class="name">Sick Leave</a>
+                <div class="description">Lorem ipsum dolor</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="89" data-animation-duration="800">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius" >
+                <div class="progress-bar progress-bar-success animate-progress-bar" data-percentage="89%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <a href="detail_leave.html" class="name">Annual Leave</a>
+                <div class="description">Duis autem vel eum</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="45" data-animation-duration="600">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius ">
+                <div class="progress-bar progress-bar-warning animate-progress-bar" data-percentage="45%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <a href="detail_leave.html" class="name">No Information</a>
+                <div class="description">Nulla Facilisis</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="12" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-danger animate-progress-bar" data-percentage="12%" ></div>
+                </div>
+              </li>
+              <li>
+                <div class="details-wrapper">
+                <a href="detail_leave.html" class="name">Late</a>
+                <div class="description">Claritas est etiam</div>
+                </div>
+                <div class="details-status pull-right"> <span class="animate-number" data-value="85" data-animation-duration="200">0</span> </div>
+                <div class="clearfix"></div>
+                <div class="progress progress-small no-radius">
+                <div class="progress-bar progress-bar-info animate-progress-bar" data-percentage="85%" ></div>
+                </div>
+              </li>
+              </ul>
+            </div>
+            </div>
+            <div class="tiles white col-md-9 no-padding">
+            <div class="tiles blue2">
+              <div class="tiles-body tiles blue2 row no-margin">
+              <section class="col-sm-5">
+                <div class="heading">  <strong>Monthly</strong> Leave</div>
+                <div>Total Leave on:
+                  <select class="size-auto no-padding" style="min-height: 20px">
+                    <option>January</option>
+                    <option>Febuary</option>
+                    <option>Maret</option>
+                    <option>April</option>
+                    <option>May</option>
+                    <option>June</option>
+                    <option>July</option>
+                    <option>Augustus</option>
+                    <option>September</option>
+                    <option>October</option>
+                    <option>November</option>
+                    <option>December</option>
+                  </select>
+                  <strong class="badge badge-danger">80</strong>
+                  <i class="fa fa-users"></i>
+                </div>
+              </section>
+              <section class="col-sm-7">
+                <div class="tiles-body">
+                  <div class="tiles-title blend text-white"> OVERALL </div>
+                  <div class="heading pull-left"><i class="fa fa-caret-up text-error"></i> <span data-animation-duration="1000" data-value="124" class="animate-number">124</span> </div>
+                  <div class="m-t-20 m-l-20 pull-left">44% higher <span class="blend text-white">than last month</span> </div>
+                </div>
+              </section>
+              </div>
+              <div class="tile-footer">
+              <div class="iconplaceholder"><i class="fa fa-calendar"></i></div>
+              Last updated: <strong>11:34 AM</strong> </div>
+            </div>
+            <div class="tiles-chart">
+              <div class="dahsboard-chart no-padding" style="">
+                <div class="row">
+                  <div id="leave_chart" style="width:100%; height:360px;" class="col-sm-8"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            </div>
+          </div>
+          </section>
+        </div>
+      </section>
+      
+      <hr />
+      
+      <section class="tab-pane active no-padding" id="emp_gender">
+        <div class="row" id="EMP-block">
+          <section class="col-sm-12">
+          <div class="row tiles-container tiles white">
+            <div class="tiles white col-sm-12 no-padding">
+            <div class="tiles blue">
+              <div class="tiles-body tiles blue">
+              <div class="heading">  <strong>All</strong> Employee</div>
+              </div>
+              <div class="tile-footer">
+              <div class="iconplaceholder"><i class="fa fa-calendar"></i></div>
+              Last updated: <strong>1/6/2015</strong> </div>
+            </div>
+            <div class="tiles-chart">
+              <div class="dahsboard-chart no-padding" style="">
+                <div id="chartdiv" style="height: 400px;"></div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            </div>
+          </div>
+          </section>
+        </div>
+      </section>
+    </div>
+      
+        
+        <div class="separator-main-block"></div>
+        <div class="page-title"><h3 class="text-purple"><i class="fa fa-angle-right"></i> Todo <strong>List</strong> and <strong>Tasks</strong></h3></div>
+            <section class="row">
+                <div class="col-md-4">
+                    <div class="widget todolist">
+                      <div class="widget-title purple">
+                        <div class="pull-left ">
+                          <button class="btn  btn-dark  btn-small" type="button"><i class="fa fa-plus"></i></button>
+                        </div>
+                        Todo list
+                        <div class="controller"> <a href="javascript:;" class="reload"></a> <a href="javascript:;" class="remove"></a> </div>
+                      </div>
+                      <div class="widget-body">
+                        <div class="col-md-12">
+                          <input type="text" class="form-control dark m-b-25" id="date">
+                        </div>
+                        <br>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox" value="1" id="chk_todo01" class="todo-list">
+                            <label for="chk_todo01">Send email to David, new signups</label>
+                          </div>
+                        </div>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox" checked="checked" value="1" id="chk_todo02" class="todo-list">
+                            <label for="chk_todo02" class="done">Call Jane!!</label>
+                          </div>
+                        </div>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox"  value="1" id="chk_todo03" class="todo-list">
+                            <label for="chk_todo03">Server upgrades ASAP</label>
+                          </div>
+                        </div>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox" value="1" id="chk_todo04" class="todo-list">
+                            <label for="chk_todo04">Hello, new task</label>
+                          </div>
+                        </div>
+            <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox"  value="1" id="chk_todo03" class="todo-list">
+                            <label for="chk_todo03">Server upgrades ASAP</label>
+                          </div>
+                        </div>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox" value="1" checked="checked" id="chk_todo04" class="todo-list">
+                            <label for="chk_todo04" class="done">Claritas est etiam</label>
+                          </div>
+                        </div>
+            <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox" checked="checked" value="1" id="chk_todo03" class="todo-list">
+                            <label for="chk_todo03" class="done">Typi non habent</label>
+                          </div>
+                        </div>
+                        <div class="row-fluid">
+                          <div class="checkbox check-success  ">
+                            <input type="checkbox" value="1" id="chk_todo04" class="todo-list">
+                            <label for="chk_todo04">Duis autem vel</label>
+                          </div>
+                        </div>
+            <div class="row-fluid">
+                          <div class="checkbox check-success">
+                            <input type="checkbox"  value="1" id="chk_todo03" class="todo-list">
+                            <label for="chk_todo03">Ut wisi enim</label>
+                          </div>
+                </div>
+                <div class="row-fluid">
+                  <div class="checkbox check-success  ">
+                    <input type="checkbox" checked="checked" value="1" id="chk_todo04" class="todo-list">
+                    <label for="chk_todo04" class="done">Lorem ipsum dolor</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div id="calendar_todo"></div>
+          </div>
+        </section>
+        <div class="separator-main-block"></div>
+        <div class="page-title">
+          <h3 class="text-warning"><i class="fa fa-angle-right"></i> <strong>Funpage</strong></h3>
+        </div>
+        <section class="row" id="fan_page">
+          <div class="col-sm-3">
+            <div class="tiles overflow-hidden full-height tiles-overlay-hover widget-item widget-news">
+              <div class="overlayer bottom-left fullwidth">
+                <div class="overlayer-wrapper">
+                </div>
+              </div>
+              <figure><%= raw @hot_funpage.medium_dashboard rescue '' %></figure>
+              <p class="p-t-10 p-b-10 "><%= raw content_only @first_funpage.content %></p>
+              <br />
+              <div class="user-comment-wrapper">
+                <div class="profile-wrapper">
+                  <img src="/assets/profiles/avatar_small.jpg" alt="" data-src="/assets/profiles/avatar_small.jpg" data-src-retina="/assets/profiles/avatar_small2x.jpg" width="35"
+                    height="35">
+                </div>
+                <div class="comment">
+                  <div class="user-name"><%= @hot_funpage.user.first_name rescue '' %></span> <%= @hot_funpage.user.last_name rescue '' %> </div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-content no-background no-margin col-sm-6">
+            <div style="position: relative; height: 200px; overflow: hidden;" class="tab-pane active no-padding ticker" id='funpage'>
+              <ul style="margin: 0px; position: absolute; top: 0px;">
+                  <% if @knowledges['Funpage'].present? %>
+                    <% @knowledges['Funpage'].each{|hot_news| %>
+                      <li style="margin: 5px; display: list-item;" class="tiles overflow-hidden tiles-overlay-hover m-b-15 widget-item widget-news news-list">
+                        <span class="badge-triangle <%= KnowledgeDetail.find_by_knowledge_id_and_user_id(hot_news.id, current_user.id) ? 'done' : 'new' %>"></span>
+                        <figure>
+                          <img src="<%= hot_news.image %>" alt="" class="image-responsive-width hover-effect-img">
+                        </figure>
+                        <article>
+                          <div class="descriptive clickable">
+                            <h4><a href="<%= knowledge_path hot_news %>"><%= raw hot_news.content %></a></h4>
+                          </div>
+                          <div class="user-comment-wrapper">
+                            <div class="profile-wrapper"> <img src="/assets/profiles/avatar_small2x.jpg" width="35" height="35"> </div>
+                            <div class="comment">
+                              <div class="user-name"><%= hot_news.user.first_name rescue '' %></span> <%= hot_news.user.last_name rescue '' %> </div>
+                            </div>
+                            <div class="clearfix"></div>
+                          </div>
+                        </article>
+                      </li>
+                    <% } %>
+                  <% else %>
+                    <div class="p-t-10 m-b-5 b-b b-grey no-msg">
+                      <div class="post">
+                        <div class="user-profile-pic-wrapper">
+                          &nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>
+                        <div class="info-wrapper">
+                          <div class="info text-black ">
+                            <p><a href="#blank"><strong>There's no message here!!</strong></a></p>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                      </div>
+                    </div>
+                  <% end %>
+                </ul>
+              </div>
+    <div id="message-navbar" class="row">
+      <div class="col-md-4">
+            <%= link_to new_dashboard_path do %>
+              All Messages <i class="fa fa-arrow-right"></i>
+            <% end %>
+          </div>
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default btn-sm up_funpage">
+              <span class="fa fa-arrow-down" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-sm down_funpage">
+              <span class="fa fa-arrow-up" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="tiles overflow-hidden full-height tiles-overlay-hover widget-item widget-news">
+          <div class="overlayer bottom-left fullwidth">
+            <div class="overlayer-wrapper"></div>
+          </div>
+          <figure><%= raw @first_funpage.medium_dashboard rescue '' %></figure>
+          <p class="p-t-10 p-b-10 "><%= raw content_only @first_funpage.content %></p>
+          <br />
+          <div class="user-comment-wrapper">
+            <div class="profile-wrapper">
+              <img src="/assets/profiles/avatar_small.jpg" data-src="/assets/profiles/avatar_small.jpg" data-src-retina="/assets/profiles/avatar_small2x.jpg" width="35" height="35">
+            </div>
+            <div class="comment">
+              <div class="user-name"><span class="bold"> <%= @first_funpage.user.first_name rescue '' %></span> <%= @first_funpage.user.last_name rescue '' %> </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div> <!-- update-block -->
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#newsticker_1').newsticker();/* Running text */
+    $('.me-wrap').click(function(){/* about me */
+      $('#me > div').removeClass('col-md-6').addClass('col-md-3');
+      $('.me-wrap').removeClass('expanded');
+      $(this).parent().removeClass('col-md-3').addClass('col-md-6');
+      $(this).toggleClass('expanded');
+    });
+    $('.slider-element').slider();
+    $('.pagination-msg ul > li').click(function(index){/* personal message paginator */
+      var idx = $(this).index();
+      $('.pagination-msg ul > li').removeClass('cur');
+      $(this).addClass('cur');
+      $('#personal_message').liveTile('goto',idx);
+    });
+    
+    $('.z-pagination ul > li').click(function(index){
+      var idx = $(this).index();
+      $('.z-pagination ul > li').removeClass('cur');
+      $(this).addClass('cur');
+      $('#zodiac_message').liveTile('goto',idx);
+    });
+    $('.dashboard .page-title h3').click(function(){
+      $(this).toggleClass('collapsed');  
+      $(this).parent().next().slideToggle();
+      $(this).siblings().fadeToggle();
+    })
+    $('#calendar_todo').fullCalendar({/* calendar */
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      defaultDate: '2015-05-12',
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2015-05-01'
+        },
+        {
+          title: 'Long Event',
+          start: '2015-05-07',
+          end: '2015-05-10'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2015-05-09T16:00:00'
+        },
+        {
+          id: 999,
+          title: 'Repeating Event',
+          start: '2015-05-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2015-05-11',
+          end: '2015-05-13'
+        },
+        {
+          title: 'Meeting',
+          start: '2015-05-12T10:30:00',
+          end: '2015-05-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2015-05-12T12:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2015-05-12T14:30:00'
+        },
+        {
+          title: 'Happy Hour',
+          start: '2015-05-12T17:30:00'
+        },
+        {
+          title: 'Dinner',
+          start: '2015-05-12T20:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2015-05-13T07:00:00'
+        },
+        {
+          title: 'Click for Google',
+          url: 'http://google.com/',
+          start: '2015-05-28'
+        }
+      ]
+    });/* end */
+  });
+  $(document).ready(function(){
+    $('#funpage').easyTicker({
+      direction: 'up',
+      easing: 'easeInBack',
+      speed: 'slow',
+      interval: 70000,
+      height: 'auto',
+      visible: 3,
+      mousePause: 0,
+      controls: {
+        up: '.up_funpage',
+        down: '.down_funpage',
+        toggle: '.toggle',
+        stopText: 'Stop !!!'
+      }
+    }).data('easyTicker');
+    <% if @first_level.size > 1 %>
+      $('.msg-blast').easyTicker({
+        direction: 'up',
+        easing: 'easeInBack',
+        speed: 'slow',
+        interval: 2000,
+        height: 'auto',
+        visible: 2,
+        mousePause: 0,
+        controls: {
+          up: '.up',
+          down: '.down',
+          toggle: '.toggle',
+          stopText: 'Stop !!!'
+        }
+      }).data('easyTicker');
+    <% end %>
+    $('.motivation_message').each(function(o){
+      if ($(this).find('input').val() != "")
+        $('.motivation_message')[o].style.background = tinycolor($(this).find('input').val()).toHexString()
+    })
+    $('#hot-news').easyTicker({
+      direction: 'up',
+      easing: 'easeInBack',
+      speed: 'slow',
+      interval: 70000,
+      height: 'auto',
+      visible: 4,
+      mousePause: 0,
+      controls: {
+        up: '.up_hot_news',
+        down: '.down_hot_news',
+        toggle: '.toggle',
+        stopText: 'Stop !!!'
+      }
+    }).data('easyTicker');
+  });
+</script>

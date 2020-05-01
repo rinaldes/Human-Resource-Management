@@ -1,0 +1,176 @@
+<%= tinymce_assets %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a onclick="return false;" class="active">Blast Message</a></li>
+  </ul>
+  <div class="page-title">
+    <% if flash.any? %>
+      <%- flash.each do |name, msg| -%>
+        <%= content_tag :h3, msg, class: "flash_content text-info" if msg.is_a?(String) %>
+      <%- end -%> 
+    <% end %>
+  </div>
+  <div class="page-title">
+    <i class="fa fa-envelope"></i>
+    <h3>Blast <span class="semi-bold">Message</span></h3>
+  </div>
+  <div class="grid simple">
+    <div class="grid-title no-border"></div>
+    <div class="grid-body no-border">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <%= raw @blast_message_errors %>
+          <%= form_for @blast_message, :html => { :multipart => true } do |f| %>
+            <label class="form-label"><strong>Send To</strong></label>
+            <div class="controls">
+            <select id="select_send" name="blast_message[send_type]" class="form-control">
+              <option value="all">Employee(s)</option>
+              <option value="emp">Employee/Each</option>
+              <option value="dvi">Division/Each</option>
+              <option value="com">Company(s)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row" id="emp_text" style="display:none">
+          <div class="col-sm-12" class="full-width">
+           <label class="form-label"><strong>Employee/Each</strong></label>
+         </div>
+         <div class="controls col-sm-12">
+                            <%= f.autocomplete_field :sender_id, autocomplete_employee_name_blast_messages_url, 'data-delimiter' => ',', :multiple => true, class: "autocomplete-field-input", placeholder: "Employee" %>           
+                            </div>
+                            </div>
+                             <div class="form-group row" id="dvi_text" style="display:none">
+                               <div class="col-sm-12" class="full-width">
+                                 <label class="form-label col-sm-12"><strong>Divisi/Each</strong>
+                                  </label>
+                               </div>
+                              <div class="controls col-sm-12">          
+                            <%= f.autocomplete_field :sender_id, autocomplete_organization_name_blast_messages_url, 'data-delimiter' => ',', :multiple => true, class: "autocomplete-field-input", placeholder: "Organization" %>          
+                            </div>
+                            </div>
+                             <div class="form-group row" id="com_text" style="display:none">
+                               <div class="col-sm-12" class="full-width">
+                                 <label class="form-label"><strong>Company</strong></label>
+                               </div>
+                              <div class="controls col-sm-12">
+                            <%= f.autocomplete_field :sender_id, autocomplete_company_email_admin_blast_messages_url, 'data-delimiter' => ',', :multiple => true, class: "autocomplete-field-input", placeholder: "Company email" %>
+                            </div>
+                            </div>
+                    </div>
+                    <div class="col-md-12"> 
+                       <div class="row">
+                            <p class="bm_type" id='cekkkkk'>
+                                <%= f.radio_button :blastmessage_type, '1' , class: "msg_mtv " , :onclick => "tesssss('1')" %> Message<br />
+                                <%= f.radio_button :blastmessage_type, '2' , class: "msg_mtv ", :onclick => "tesssss('2')" %> Motivate<br />
+                           </p>
+                        </div>
+                    </div>
+                        <div class="grid simple msg_mtv">
+                         <div class="tab-pane" id="msg_radio">
+                           <%= f.text_area :message, id: "text-editor" , placeholder: "Enter text ...", class: "form-control tinymce", rows: "10"%><br>
+                         </div>  
+                         <div id="mtv_radio">
+                          <div class="col-sm-3">
+                          <strong>Select Image Or Color for Background Motivate :</strong><br><br>
+                          <div class="profile-user del-mrg">
+                            <a class="opt-profile change tip btn-upload" data-toggle="tooltip" data-placement="top" data-original-title="Upload"><i class="fa fa-upload" onclick="$('#blast_message_image').click();"></i></a>
+                            <%= f.file_field :image, class: "opt-profile change tip hidden fa fa-upload", :data => {toggle: 'tooltip', placement: 'top', 'original-title' => 'Upload'}, placeholder: "Upload your image", :onchange =>"readURL(this);"%>
+                           
+                         
+                                <% if @blast_message.image.present? %>
+                                          <img id="img_prev" src="<%= @blast_message.image %>" alt="profile" />
+                                         <!-- <img id="img_prev" src="/assets/gallery/Actions-insert-image-icon.png"/> -->
+                                     
+                                    <% else %>
+                                          <img id="img_prev" src="/assets/gallery/Actions-insert-image-icon.png"/>
+                                     
+                                    <% end %>
+                          </div>
+                      </div>
+                      <br>
+                           <input id='colorpicker' name="blast_message[background_color]"/>
+                              <script>
+                              $("#colorpicker").spectrum({
+                                  color: "#f00"
+                              });
+                              </script>
+                         </div>  
+                         </div>
+                        </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="pull-right">
+                 <%= f.submit "Save", class: "btn btn-success btn-cons", type: "submit" %>
+                  
+                </div>
+            </div>
+            <% end %>
+</div>
+ <script type="text/javascript">
+$(document).ready(function(){
+$(".ind").hide();
+    $("#showing").click(function(){
+        $(".ind").hide();
+$(".ing").show();
+    });
+    $("#showing2").click(function(){
+        $(".ind").show();
+$(".ing").hide();
+    });
+});
+
+function tesssss(nil){
+  if(nil == '1'){
+      $('#msg_radio').show('fast');
+      $('#mtv_radio').hide('fast');  
+  }else{
+        $('#msg_radio').show('fast');
+        $('#mtv_radio').show('fast');
+      }
+}
+</script>
+
+
+<script type="text/javascript">
+  $('#select_send').change(function(){
+      var value = $(this).val();
+      if(value == 'emp'){
+        $('#emp_text').show('fast');
+        $('#dvi_text').hide('fast');
+        $('#com_text').hide('fast');
+      }else if(value == 'dvi'){
+        $('#dvi_text').show('fast');
+        $('#emp_text').hide('fast');
+        $('#com_text').hide('fast');
+      }else{
+        $('#dvi_text').hide('fast');
+        $('#emp_text').hide('fast');
+        $('#com_text').hide('fast');
+      }
+
+
+    });
+</script>
+
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#img_prev')
+          .attr('src', e.target.result)
+          .width(240)
+          .height(250);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+</script>
+
+<%= tinymce %>

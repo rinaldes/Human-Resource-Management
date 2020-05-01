@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content"> 
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-times"></li></button>
+      <h3 style="font-size: 17px;">Change Recruitment Status</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_for(@recruitment, multipart: true) do |f| %>
+        <div class="control-group">
+          <label class="control-label" for="leave_status">Recruitment Status</label>
+          <%= f.hidden_field :id, value: params[:id] %>
+          <%= f.select :status, options_for_select(['Pending', 'Approved', 'Open', 'Cancel']), {:prompt => '--select--'},:class => "form-control" %>
+        </div>
+        <div class="modal-footer">
+      <%= f.submit "Update", class: "btn btn-success"%>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+    </div>
+      <% end %>
+  </div>
+</div>

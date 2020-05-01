@@ -1,0 +1,13 @@
+<% @employees.each do |employee| %>
+  <tr class="new-rec">
+    <td><%= link_to employee.nik, edit_employee_path(employee)%></td>
+    <td><%= employee.name %></td>
+    <td>
+      <%= raw ("<span class='badge badge-#{(employee.flag_employee ? "success" : "warning")}'>#{employee.flag_employee ? 'Approved' : 'Pending'}</span>") rescue "-" %>
+    </td>
+     <td>
+      <%= link_to edit_approval_employee_path(employee), id: "_edit", class: "fa fa-gear", remote: true do %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>

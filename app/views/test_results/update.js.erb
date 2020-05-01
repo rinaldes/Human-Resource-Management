@@ -1,0 +1,8 @@
+<% if params[:for_applicant].present? %>
+$('#request tbody tr:eq(0)').remove();
+$('#request tbody').prepend("<%= j(render 'data', :test_result => @test_result) %>");
+$('#button-new').show();
+<% else %>
+$("#myModal").modal('hide')
+location.reload()
+<% end %>

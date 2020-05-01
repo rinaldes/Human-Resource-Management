@@ -1,0 +1,68 @@
+  <div class="grid simple">
+    <div class="grid-body no-border has-tab">
+      <%= render '/employees/tab_nav'%>         
+      <div class="tab-content">
+        <section class="tab-pane active">
+          <div class="row toolbar-block">
+            <h4 class="semi-bold col-md-4">
+              <i class="fa fa-check-square"></i> Education Detail
+            </h4>
+            <div class="col-md-8">
+              <div class="toolbar pull-right">
+                <%= link_to "<span class=\"fa fa-plus\"></span> Add New".html_safe, new_education_detail_path(:employee_id => params[:id]), :remote => true, :class => "btn btn-success" %>
+                <%= button_tag "Tools <i class=\"fa fa-angle-down\"></i>".html_safe, :class => "btn btn-default dropdown-toggle", :"data-toggle" => "dropdown" %>
+                <ul class="dropdown-menu pull-right">
+                  <li><%= link_to "Export to CSV", education_details_path(format: "csv", id: params[:id]) %></li>
+                  <li><%= link_to "Export to Excel", education_details_path(format: "xls",id: params[:id]) %></li>
+                  <li data-toggle="modal" data-target="#upload_modal"><a>Import from CSV</a></li>
+                </ul>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_upload">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-cloud-upload\"></span> Upload".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#upload_modal" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_education_detail">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-edit\"></span> Edit".html_safe, :class => "btn", :onclick => "edit_education_detail()", :id => "button_edit_education_detail" %>
+                  <%= button_tag "<span class=\"fa fa-trash\"></span> Remove".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#confirm_modal", :id => "button_remove_education_detail", :"data-section" => "education_detail", :onclick => "set_delete_url('/education_details/delete')" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table no-more-tables table-striped table-hover" id="education_detail">
+            <thead>
+              <tr>
+                <th style="width: 45px" >
+                  <div class="checkbox check-default">
+                    <input id="checkall_education_detail" data-section="education_detail" data-educationdetail="parent" type="checkbox" value="1" class="checkall parent-education_detail">
+                    <label for="checkall_education_detail"></label>
+                  </div>
+                </th>
+                <th>Grade</th>
+                <th>Institution</th>
+                <th>start</th>
+                <th>end</th>
+                <th>Major</th>
+                <th>Final Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @education_details.count != 0 %>
+                <% @education_details.each do |education_detail| %>
+                  <%= render 'education_details/data', :education_detail => education_detail%>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan='6' align='center'>No Data Found !</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+    <br class="clear"/>
+  </div>

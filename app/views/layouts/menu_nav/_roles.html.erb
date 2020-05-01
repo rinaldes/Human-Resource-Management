@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to roles_path, class: (controller_name.downcase=="roles" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Role Management'} do %>
+						<i class="fa fa-gears"></i>
+						<span class="title" ><%= t(:role_management) %></span>
+					<% end %>
+				</li>

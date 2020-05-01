@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App HRM - Dashboard</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />	<meta content="App - Human Resource Management" name="description" />
+    <meta content="Human Resource Management" name="author" />
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="grey">
+    <div id="element" class="introLoading"></div>
+    <% if user_signed_in? %>
+      <%= render "layouts/header" if @need_header_and_sidebar %>
+        <div class="page-container row-fluid">
+          <%= render "layouts/sidebar" if @need_header_and_sidebar %>
+          <div class="page-content dashboard condensed">
+            <%= yield %>
+          </div>
+          <%= render "layouts/chat" %>
+        </div>
+    <% else %>
+      <div class="content">
+        <%= yield %>
+      </div>
+    <% end %>
+    <script>
+      $(document).on('ready', function() {
+        $("#element").introLoader({
+          animation: {
+            name: 'gifLoader',
+            options: {
+              exitFx:'slideUp',
+              ease: "easeInOutCirc",
+              style: 'light',
+              delayBefore: 1000,
+              exitTime: 1000
+            }
+          }
+        });
+      });
+      paging()
+      function reload_list(params){
+        for (i=0; i<$('input.search').length; i++){
+          input_search = $('input.search')[i]
+          params['search['+input_search.name+']'] = input_search.value
+        }
+        $.ajax({
+          url: '<%= request.env['REQUEST_PATH'] %>'.split('?page')[0],
+          method: "get",
+          data: params,
+          dataType: "script"
+        })
+      }
+      function paging(){
+        $('.pagination a').bind('click', function(){
+          reload_list({page: this.href.split('page=')[1].split('&')[0]})
+          return false
+        })
+        $(document).keypress(function(e) {
+          if(e.which == 13)
+            reload_list({})
+        });
+        $('.sorting').click(function(){
+          reload_list({sort: this.id})
+          $(this).addClass('hide')
+          if($(this).attr('id').split('-')[1] == 'desc')
+            $(this).next().removeClass('hide')
+          else
+            $(this).prev().removeClass('hide')
+        })
+      }
+    </script>
+  </body>
+</html>

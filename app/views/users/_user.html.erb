@@ -1,0 +1,22 @@
+<tr id="user_<%= user.id %>" class="">
+  <td>
+    <div class="checkbox check-default">
+      <input id="checkbox13" type="checkbox" value="1">
+      <label for="checkbox13"></label>
+    </div>
+  </td>
+  <td><%= link_to user.full_name, user, remote: true %></td>
+  <td class="v-align-middle"><span class="muted"><%= link_to user.username, user, remote: true %></span></td>
+  <td><span class="muted"><%= user.email %></span></td>
+  <td><%= user.role %></td>
+  <td><span class="label label-<%= user.status == 'active' ? 'success' : 'danger' %>"><%= user.status.titleize %></span></td>
+  
+     <td nowrap='nowrap'>
+      <%= link_to "Edit", edit_user_path(user), remote: true, class: 'btn btn-warning' %>
+       <% if user.status == 'inactive' %>
+       <%= link_to "Delete", user_path(user), class: 'btn delete-asset btn-danger', method: 'DELETE',
+        'data-confirm' => "Are you sure you wish to delete this user?" %>
+        <% else %>
+       <% end %>
+    </td>
+</tr>

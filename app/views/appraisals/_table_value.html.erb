@@ -1,0 +1,42 @@
+<div class="col-md-12">
+<div class="row">
+<div class="col-md-12">
+<section class="panel">
+<div class="panel-body toggle-heading">
+  <div class="col-md-12">
+      <div class="toolbar pull-right" id="toolbar_main">
+      <div class="table-tools-actions">
+          <%= link_to "<span class='fa fa-plus'></span> Add Value".html_safe , value_appraisals_path, remote: true, :class => "btn btn-success"%>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+<table class="table no-more-tables table-striped table-hover" id="value">
+    <thead>
+        <tr>
+            <th>Value</th>
+            <th>Bobot</th>
+        </tr>
+    </thead>
+    <tbody id='appraisal_values'>
+      	<%= f.fields_for :appraisal_values do |appraisal_value| %>
+        	<%= render 'appraisal_value_fields', :f => appraisal_value %>
+        <% end %>
+        <tr>
+          <th>Total</th>
+          <td>
+          <div class="warn1">Minum 0 dan Maksimal 100</div>
+          <%= text_field_tag "total" , '' , class: 'form-control total2' , placeholder: 'Total' %>
+          </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</div> <!-- grid-body no-border -->
+</div> <!-- grid simple -->
+</div> <!-- container-fluid -->

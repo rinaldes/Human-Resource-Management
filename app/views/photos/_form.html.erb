@@ -1,0 +1,132 @@
+<%= tinymce_assets %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="">Photo</a></li>
+    <li><a href="#" class="active">New</a></li>
+  </ul>
+  <div class="page-title">
+    <i class="fa fa-envelope"></i>
+    <h3>Gallery <span class="semi-bold">Management</span></h3>
+  </div>
+  <div class="grid simple">
+    <%= form_for @photo, :html => { :multipart => true } do |f| %>
+      <% photo_receivers = f.object.photo_receivers %>
+      <div class="grid-title no-border"></div>
+        <div class="grid-body no-border">
+          <div class="gen-form" action="">
+            <div class="form-group row">
+              <label class="form-label col-sm-12"><strong>caption</strong></label>
+              <div class="controls col-sm-12">
+                <%= f.text_field :caption, :class => "full-width", :placeholder => "caption" %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="form-label col-sm-12">
+                <label class="form-label"><strong>Divisi</strong></label>
+                <span class="help">e.g. "Marketing", "HRD"</span>
+              </div>
+              <div class="controls col-sm-12">
+                <% if params[:action] == 'edit' %>
+                  <%= f.autocomplete_field :organization_id, autocomplete_organization_photos_url, 'data-delimiter' => ',', :multiple => true, class: "autocomplete-field-input",
+                    placeholder: "Organizations",
+                    value: (photo_receivers.present? ? photo_receivers.map{ |r| r.organization.name }.join(', ') : (params[:photo][:organization_id] rescue '')) %>
+                <% else %>
+                  <%= f.autocomplete_field :organization_id, autocomplete_organization_photos_url, 'data-delimiter' => ',', :multiple => true, class: "autocomplete-field-input",
+                    placeholder: "Organizations" %>
+                <% end %>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="form-label col-sm-12">
+                  <label class="form-label col-sm-12"><strong>Activity</strong></label>
+                        </div>
+                        <div class="controls col-sm-12">
+                           <%= f.select :photo_activity_id, options_for_select(PhotoActivity.all.map{|x| [x.name, x.id]}) %>
+                                     
+                        </div>
+                        </div>
+
+              
+                    <div class="tab-pane active"> 
+                        <%= f.text_area :histories,  :id => "text-editor", :placeholder => "Enter text  ...", :class => "form-control tinymce", :rows => "10" %>
+                        
+                    </div>
+                   <div class="col-sm-3">
+                  <div class="profile-user del-mrg">
+                    <a class="opt-profile change tip btn-upload" data-toggle="tooltip" data-placement="top" data-original-title="Upload"><i class="fa fa-upload" onclick="$('#photo_image').click();"></i></a>
+                    <%= f.file_field :image, class: "opt-profile change tip hidden fa fa-upload", :data => {toggle: 'tooltip', placement: 'top', 'original-title' => 'Upload'}, placeholder: "Upload your image", :onchange =>"readURL(this);"%>
+                   
+                 
+                        <% if @photo.image.present? %>
+                                  <img id="img_prev" src="<%= @photo.image %>" alt="profile" />
+                                 <!-- <img id="img_prev" src="/assets/gallery/Actions-insert-image-icon.png"/> -->
+                             
+                            <% else %>
+                                  <img id="img_prev" src="/assets/gallery/Actions-insert-image-icon.png"/>
+                             
+                            <% end %>
+                            </div>
+                        </div>
+                        
+                    </div>
+                   </div>
+
+                      <div class="form-actions">  
+                    <div class="pull-right">
+                      <%= f.submit class: "btn btn-success btn-cons", type: "submit", name: "commit", value: "save" do %>
+                      <% end %>
+                </div>
+              </div>
+                  </div>
+                  </div>
+
+     <% end %> 
+
+  <script type="text/javascript">
+    $('#select_send').change(function(){
+      var value = $(this).val();
+      if(value == 'emp'){
+        $('#emp_text').show('fast');
+      }else{
+        $('#emp_text').hide('fast')
+      }
+    });
+    </script>
+
+    <script type="text/javascript">
+Dropzone.options.myAwesomeDropzone = {
+  maxFiles: 1,
+  accept: function(file, done) {
+    console.log("uploaded");
+    done();
+  },
+  init: function() {
+    this.on("maxfilesexceeded", function(file){
+        alert("No more files please!");
+    });
+  }
+};
+    </script>
+
+<script type="text/javascript">
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#img_prev')
+          .attr('src', e.target.result)
+          .width(240)
+          .height(250);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  tinyMCE.init({
+    selector: 'textarea.editor'
+  });
+</script>
+<%= tinymce %>

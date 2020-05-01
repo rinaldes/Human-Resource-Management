@@ -1,0 +1,1 @@
+$('#value tbody').prepend("<%= j(render 'appraisal_value_fields', :appraisal_values => @appraisal_values) %>");

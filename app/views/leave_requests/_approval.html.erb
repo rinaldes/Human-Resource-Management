@@ -1,0 +1,21 @@
+<div class="modal-dialog">
+  <div class="modal-content"> 
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-times"></li></button>
+      <h3 style="font-size: 17px;">Change Leave Status</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_for(@leave_request, multipart: true, remote: true) do |f| %>
+        <div class="control-group">
+          <label class="control-label" for="leave_status">Leave Status</label>
+          <%= f.hidden_field :id, value: params[:id] %>
+          <%= f.select :status, options_for_select(['Approved', 'Pending', 'Rejected', 'Cancelled']), {:prompt => '--select--'},:class => "form-control" %>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <%= f.submit "Update", class: "btn btn-success", :onclick => "update_leave_request();", 'data-dismiss' => "modal" %>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+      <% end %>
+  </div>
+</div>

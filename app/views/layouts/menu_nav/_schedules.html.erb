@@ -1,0 +1,10 @@
+<li class="tip " data-toggle="tooltip" data-placement="right" data-original-title="Master Data"> 
+	<a href="#" class=""> <i class="fa fa-th"></i> <span class="title">Master Data </span> </a>
+	<ul class="sub-menu">
+		<li class="">
+			<%= link_to schedules_path, class: (controller_name.downcase=="schedules" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Schedule'} do %>
+			<span class="title" ><%= t(:schedule) %></span>
+			<% end %>
+		</li>
+	</ul>
+</li>

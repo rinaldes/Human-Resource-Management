@@ -1,0 +1,53 @@
+<%= fields_for :appraisal_values do |f| %>
+<tr border=1 class="nested-fields">
+  <td>
+    <%= f.autocomplete_field :goal_value, autocomplete_goal_value_appraisals_url, :label => false, :placeholder => 'value', class: 'form-control'%>
+  </td>
+  <td>
+  	<div class="warn">Minimal 0 & Maksimal 100</div>
+    <%= f.number_field :bobot, :label => false, :in => 0..90, :step => 1, :placeholder => 'Bobot', class: 'form-control bobot2'%>
+  </td>
+</tr>
+<% end %>
+
+<script type="text/javascript">
+	
+    $(document).ready(function(){
+    $( ".warn" ).hide();
+   $( ".bobot2" ).change(function() {
+      if ($(this).val() > 100)
+      {
+          $(this).val(100);
+          $( ".warn" ).show();
+      }
+      else if ($(this).val() < 0)
+      {
+          $(this).val(0);
+          $( ".warn" ).show();
+      }       
+    });
+   });
+
+</script>
+
+<script type="text/javascript">
+  // we used jQuery 'keyup' to trigger the computation as the user type
+$('.bobot2').keyup(function () {
+ 
+    // initialize the sum (total price) to zero
+    var sum = 0;
+     
+    // we use jQuery each() to loop through all the textbox with 'price' class
+    // and compute the sum for each loop
+    $('.bobot2').each(function() {
+        sum += Number($(this).val());
+    });
+    if(sum > 100){
+
+    }else{
+    // set the computed value to 'totalPrice' textbox
+    $('.total2').val(sum);    
+    }
+    matriks();
+});
+</script>

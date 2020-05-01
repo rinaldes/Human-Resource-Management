@@ -1,0 +1,13 @@
+<div class="col-md-12">
+  <div class="dataTables_paginate paging_bootstrap pagination">
+    <%= pagination_links(records, :params => {:controller => params[:controller], :action => 'index'}) %>
+  </div>
+</div>
+<div class="dataTables_info">
+  Showing
+  <b>
+    <%= params[:page] ? (params[:page].to_i*params[:per_page].to_i) : 1 %>
+    to <%= params[:per_page].to_i < records_count ? records_count : params[:per_page].to_i*params[:page].to_i %>
+  </b>
+  of <%= records_count %> entries
+</div>

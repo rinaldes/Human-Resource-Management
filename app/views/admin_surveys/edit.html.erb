@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="#" class="active">Survey</a></li>
+  </ul>        
+    <div class="page-title">  
+      <i class="fa fa-tasks"></i>
+      <h3><span class="semi-bold">Survey</span></h3>  
+    </div>
+    	    <%= form_for @admin_survey do |f| %>
+              <div class="form-group">
+                <%= f.label :question_title, class: "col-sm-3 control-label" %>
+              
+                <%= f.text_field :question_title, class: "form-control" %>
+              
+              </div>
+              <div class="form-group">
+                <%= f.label :question_type, class: "col-sm-3 control-label" %>
+              
+                <%= f.select :question_type, options_for_select(['Text Box', 'Text Area', 'Date Picker']), {:prompt => '--select--'},{:class => "size-auto"}%>              
+              </div>
+              <div class="form-group" id="preview-aja">
+                <div id="text-box">
+                  <%= f.label "Preview", class: "col-sm-3 control-label" %>
+                  <input type='text' class = "form-control" placeholder = "Text Box Example" disabled>
+                </div>
+                <div id="text-area">
+                  <%= f.label "Preview", class: "col-sm-3 control-label" %>
+                  <textarea class ="form-group row full-width" rows = "4" placeholder = "Text Area Example"disabled></textarea>
+              </div>
+              <div class="input-append success date" id="date__picker">
+              <%= f.label "Preview", class: "col-sm-6 control-label" %>
+                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+              </div>
+              </div>
+              <div class="form-group">      
+              <label for="checkbox2">Status</label>
+              <%= f.check_box :status, value: 1 %>
+              <div class="col-md-4">
+                  <label for="checkbox2">Publish or Not</label>
+                </div>
+            </div>                       
+            <%= f.submit "Save", :class => "btn btn-success" %> 
+          <%end%>
+          </div>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $('#text-box').hide();
+    $('#text-area').hide();
+    $('#date__picker').hide();
+    $('.form-group .size-auto').change(preview);
+
+    function preview(){
+      if ($('#admin_survey_question_type').val() == "Text Box"){
+        $('#text-area').hide();
+        $('#date__picker').hide();
+        $('#text-box').show();
+      }else if($('#admin_survey_question_type').val() == "Text Area"){
+        $('#date__picker').hide();
+        $('#text-box').hide();
+        $('#text-area').show();
+      }else{
+        $('#text-box').hide();
+        $('#text-area').hide();
+        $('#date__picker').show();
+      }
+    }
+  });
+
+  $('.input-append.date').datepicker({
+    autoclose: true,
+    todayHighlight: true
+  });
+</script>

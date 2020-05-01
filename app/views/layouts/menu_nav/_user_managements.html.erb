@@ -1,0 +1,6 @@
+<li class="">
+	<%= link_to user_managements_path, class: (controller_name.downcase=="users" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'User Management'} do %>
+		<i class="fa fa-users"></i>
+		<span class="title" ><%= t(:user_management) %></span>
+	<% end %>
+</li>

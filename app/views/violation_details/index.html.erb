@@ -1,0 +1,66 @@
+  <div class="grid simple">
+    <div class="grid-body no-border has-tab">        
+      <div class="tab-content">
+        <section class="tab-pane active">
+          <div class="row toolbar-block">
+            <h4 class="semi-bold col-md-4">
+              <i class="fa fa-check-square"></i> Violation Detail
+            </h4>
+            <div class="col-md-8">
+              <div class="toolbar pull-right">
+                <%= link_to "<span class=\"fa fa-plus\"></span> Add New".html_safe, new_violation_detail_path(:employee_id => params[:id]), :remote => true, :class => "btn btn-success" %>
+                <%= button_tag "Tools <i class=\"fa fa-angle-down\"></i>".html_safe, :class => "btn btn-default dropdown-toggle", :"data-toggle" => "dropdown" %>
+                <ul class="dropdown-menu pull-right">
+                  <li><%= link_to "Export to CSV", violation_details_path(format: "csv", id: params[:id]) %></li>
+                  <li><%= link_to "Export to Excel", violation_details_path(format: "xls", id: params[:id]) %></li>
+                  <li data-toggle="modal" data-target="#upload_modal"><a>Import from CSV</a></li>
+                </ul>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_upload">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-cloud-upload\"></span> Upload".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#upload_modal" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_violation_detail">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-edit\"></span> Edit".html_safe, :class => "btn", :onclick => "edit_violation_detail()", :id => "button_edit_violation_detail" %>
+                  <%= button_tag "<span class=\"fa fa-trash\"></span> Remove".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#confirm_modal", :id => "button_remove_violation_detail", :"data-section" => "violation_detail", :onclick => "set_delete_url('/violation_details/delete')" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table no-more-tables table-striped table-hover" id="violation_detail">
+            <thead>
+              <tr>
+                <th style="width: 45px" >
+                  <div class="checkbox check-default">
+                    <input id="checkall_violation_detail" data-section="violation_detail" data-violationdetail="parent" type="checkbox" value="1" class="checkall parent-violation_detail">
+                    <label for="checkall_violation_detail"></label>
+                  </div>
+                </th>
+                <th>Violation Type</th>
+                <th>Violation Description</th>
+                <th>Start</th>
+                <th>Duedate</th>
+                <th>Punishment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @violation_details.count != 0 %>
+                <% @violation_details.each do |violation_detail| %>
+                  <%= render 'violation_details/data', :violation_detail => violation_detail%>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan='6' align='center'>No Data Found !</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+    <br class="clear"/>
+  </div>

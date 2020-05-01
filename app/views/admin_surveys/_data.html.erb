@@ -1,0 +1,18 @@
+<% if params[:action] != "update" %>
+  <tr id="data_<%= adsurvey.id %>">
+<% end %>
+ 	<td>
+    <div class="checkbox check-default">
+      <input id="checkbox<%= adsurvey.id %>" type="checkbox" value="<%= adsurvey.id %>" onchange="cek_checkbox();">
+      <label for="checkbox<%= adsurvey.id %>"></label>
+    </div>
+  </td>
+  <td><%= link_to adsurvey.question_title, edit_admin_survey_path(adsurvey) %></td>
+  <td><%= adsurvey.question_type %></td>
+  <td><% if adsurvey.status == "1" %>
+        <%= "Publish" %>
+      <%else%>
+        <%= "Not Publish"%>
+      <%end%>
+  </td>
+</tr>

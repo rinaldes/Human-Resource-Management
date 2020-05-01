@@ -1,0 +1,14 @@
+<% if params[:action] != "update" %>
+  <tr id="data_<%= category.id %>">
+<% end %>
+  <td>
+    <div class="checkbox check-default">
+      <input id="checkbox<%= category.id %>" type="checkbox" value="<%= category.id %>" onchange="cek_checkbox();">
+      <label for="checkbox<%= category.id %>"></label>
+    </div>
+  </td>
+  <td><%= category.name %></td>
+  <td><%= category.category_group %></td>
+<% if params[:action] != "update" %>
+  </tr>
+<% end %>

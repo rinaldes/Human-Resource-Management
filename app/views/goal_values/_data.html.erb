@@ -1,0 +1,9 @@
+<%= "<tr id=\"data_#{goal_value.id}\">".html_safe if params[:action] != "update_goal_value" %>  
+<td>
+  <div class="checkbox check-default">
+    <input id="checkbox<%= goal_value.id %>" type="checkbox" value="<%= goal_value.id %>" class="child-goal_value child-box" data-section="goal_value" data-goalvalue="child">
+    <label for="checkbox<%= goal_value.id %>"></label>
+  </div>
+</td>
+    <td><%= goal_value.value %></td>
+    <%= "</tr>".html_safe if params[:action] != "update_goal_value" %>

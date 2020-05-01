@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Employee name</Data></Cell>
+        <Cell><Data ss:Type="String">Training Type</Data></Cell>
+        <Cell><Data ss:Type="String">Start</Data></Cell>
+        <Cell><Data ss:Type="String">End</Data></Cell>
+        <Cell><Data ss:Type="String">Sponsor</Data></Cell>
+        <Cell><Data ss:Type="String">Result</Data></Cell>
+      </Row>
+    <% @training_histories.each do |training_history| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= training_history.employee.name %></Data></Cell>
+       	<Cell><Data ss:Type="String"><%= training_history.training_type %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= training_history.start %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= training_history.end %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= training_history.sponsor %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= training_history.result %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

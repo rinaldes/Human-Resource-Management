@@ -1,0 +1,41 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <br>
+        <h4 id="myModalLabel" class="semi-bold">Termination</h4>
+        <p class="no-margin">Input date and reason of resign.</p>
+        <br>
+      </div>
+      <div class="modal-body">
+        <%= form_for(@employee_resign ,:remote => true, class: "gen-form") do |f| %>
+          <div class="form-group row edit-field">
+            <label class="form-label col-sm-5">Date of Resignation</label>
+            <div class="controls col-sm-2">            
+              <div class="input-append success date">
+                <%= f.text_field :date_of_resign , class: "form-control full-width" %>
+                <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+              </div>
+            </div>
+          </div>
+          <div class="form-group row edit-field">
+            <label class="form-label col-sm-5">Reason of Resign</label>
+            <div class="controls col-sm-7">            
+              <%= f.text_area :reason_of_resign , class: "form-control full-width" %>
+              <%= f.hidden_field :employee_id , :value => params[:employee_id] %>
+            </div>
+          </div>
+          <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit "Yes", class: "btn btn-primary" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $('.input-append.date').datepicker({
+  autoclose: true,
+  todayHighlight: true
+  });
+</script>

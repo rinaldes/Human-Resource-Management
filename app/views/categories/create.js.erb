@@ -1,0 +1,6 @@
+<% if @category.save %>
+	$('#category tbody tr:eq(0)').remove();
+	$('#button-new').show();
+	$('#category tbody').prepend("<%= j(render 'data', :category => @category) %>");
+<% else %>
+<% end %>

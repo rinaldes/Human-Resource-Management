@@ -1,0 +1,30 @@
+<% if params[:action] == "new" %>
+  <tr>
+<% end %>
+  <%= form_for(category, html: { role: "form", multipart: true}, remote: true) do |f| %>
+    <td>
+      <div class="checkbox check-default">
+        <input id="checkbox12" type="checkbox" value="1">
+        <label for="checkbox12"></label>
+      </div>
+    </td>
+    <td>
+      <%= f.text_field :name, :class => "full-width", :placeholder => "Category" %>
+    </td>
+    <td>
+      <%= f.select :category_group, options_for_select(['Umum', 'Khusus']) %>
+    </td>
+    <td>
+      <div>
+        <% if params[:action] == "new" %>
+          <%= f.submit "Add", class: "btn btn-success", :onclick => "submit_category();"%>
+        <% else %>
+        <%= f.hidden_field :id, :value => params[:id] %>
+          <%= f.submit "Update", class: "btn btn-success", :onclick => "update_category();"%>
+        <% end %>
+      </div>
+    </td>
+  <% end %>
+<% if params[:action] == "new"%>
+  </tr>
+<% end %>

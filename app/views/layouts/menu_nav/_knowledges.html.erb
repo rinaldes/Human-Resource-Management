@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to knowledges_path, class: (controller_name.downcase=="knowledges" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Knowledge Management'} do %>
+					<i class="fa fa-book"></i>
+					<span class="title" ><%= t(:knowledge_management) %></span>
+					<% end %>
+				</li>

@@ -1,0 +1,4 @@
+<ul class="nav nav-tabs">
+<li class="<%= params[:controller] == 'goal_values' ? 'active' : ''%>"><%= link_to "Value", goal_values_path(:id => params[:id]) %></li>
+<li class="<%= params[:controller] == 'goals' ? 'active' : ''%>"><%= link_to "Goal", goals_path(:id => params[:id]) %></li>
+</ul>

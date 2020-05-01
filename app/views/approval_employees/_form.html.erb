@@ -1,0 +1,20 @@
+<div class="modal-dialog">
+  <div class="modal-content"> 
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><li class="fa fa-times"></li></button>
+      <h3 style="font-size: 17px;">Change Profile Status</h3>
+    </div>
+    <div class="modal-body">
+      <%= form_for @approval_employee, :url => update_approval_employee_path(@approval_employee) do |f| %>
+        <div class="control-group">
+          <label class="control-label" for="flag_employee">Profile Status</label>
+          <%= f.select :flag_employee, options_for_select(['Approved', 'Pending']), {:prompt => '--select--'},:class => "form-control" %>
+        </div>
+        <div class="modal-footer">
+      <%= f.submit "Update", class: "btn btn-success"%>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+    </div>
+      <% end %>
+  </div>
+</div>

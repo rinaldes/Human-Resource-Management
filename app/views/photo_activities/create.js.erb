@@ -1,0 +1,6 @@
+<% if @photo_activity.save %>
+	$('#photo_activity tbody tr:eq(0)').remove();
+	$('#button-new').show();
+	$('#photo_activity tbody').prepend("<%= j(render 'data', :photo_activity => @photo_activity) %>");
+<% else %>
+<% end %>

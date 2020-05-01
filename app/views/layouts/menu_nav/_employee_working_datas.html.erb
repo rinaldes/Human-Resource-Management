@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to employees_path, class: (["employees", "employee_histories", "employee_working_datas", "families", "performances", "salaries"].include?(controller_name.downcase) ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Employee'} do %>
+					<i class="fa fa-users"></i>
+					<span class="title"><%= t(:employee) %></span>
+					<% end %>
+				</li>

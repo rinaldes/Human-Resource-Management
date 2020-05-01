@@ -1,0 +1,62 @@
+<%# if params[:action] == "new"%>
+	<tr id="data_<%= goal.id %>">
+<%# end %>
+	<%= form_for(goal, html: { role: "form", multipart: true}, remote: true) do |f| %>
+			<% if params[:action] == "new"%>
+				<%#= f.hidden_field :goal_id, :value => params[:goal_id]%>
+			<% else %>
+				<%= f.hidden_field :id, :value => params[:id] %>
+			<% end %>
+		<td>
+			<div class="checkbox check-default">
+                <input id="checkbox12" type="checkbox" value="1">
+                <label for="checkbox12"></label>
+            </div>
+		</td>
+
+		<td>
+			<%= f.text_field :goal, :class => "full-width", :placeholder => "Goal" %>
+		</td>
+		
+		<td>
+			<div>
+				<% if params[:action] == "new" %>
+        	<%= f.submit "Add", class: "btn btn-success", :style => "margin: 0 0 0 30px;", :onclick => "submit_goal();"%>
+        	<button class="btn btn-danger" onclick="$(this).parent().parent().parent().remove(); $('.new-rec').remove()"> cancel </button>
+      	<% else %>
+      		<%= f.submit "Update", class: "btn btn-success", :style => "margin: 0 0 0 30px;", :onclick => "update_goal();"%>
+        	<button class="btn btn-danger" onclick="reset_view_<%= f.object.id %>()"> cancel </button>
+      	<% end %>
+      </div>
+      <% if f.object.id.present? %>
+				<script type="text/javascript">
+					function reset_view_<%= f.object.id %>() {
+						$("#data_<%= f.object.id %>").replaceWith("<%= j(render 'data', :goal => f.object) %>");
+						$('#toolbar_goal').addClass('hide');
+						$('#button_edit_goal').addClass('hide');
+						$('#button_remove_goal').addClass('hide');
+						$(".child-box").each(function(){
+						  $(this).click(function() {
+						    section = $(this).attr("data-section")
+						    children = $(".child-" + section)
+						    // $(this).parent().parent().parent().toggleClass('row_selected')
+
+						    show_button($(this))
+						    
+						    selected_count = 0
+						    children.each(function(){ if ($(this).is(':checked')) { selected_count += 1 } })
+						    if (selected_count==children.length) {
+						      $(".parent-" + section).prop('checked', true)
+						    } else{
+						      $(".parent-" + section).prop('checked', false)
+						    };
+						  })
+						})
+					}
+				</script>
+			<% end %>
+		</td>
+	<% end %>
+<%# if params[:action] == "new"%>
+	</tr>
+<%# end %>

@@ -1,0 +1,10 @@
+<%= fields_for :appraisal_goals do |f| %>
+<tr border=1 class="nested-fields">
+  <td>
+    <%= f.autocomplete_field :goal, autocomplete_goal_appraisals_url, :label => false, :placeholder => 'goal', class: 'form-control'%>
+  </td>
+  <td>
+    <%= f.number_field :bobot, :label => false, :placeholder => 'Bobot', class: 'form-control bobot'%>
+  </td>
+</tr>
+<% end %>

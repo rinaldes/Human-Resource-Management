@@ -1,0 +1,73 @@
+<div class="container-fluid">
+	<ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="/employees" class="active">Employee</a></li>
+  </ul>    
+    <div class="page-title">	
+    	<i class="fa fa-users"></i>
+    	<h3><span class="semi-bold">Employee</span></h3>	
+    </div>  
+    <div class="form-group row">
+                                          <div class="controls col-sm-8">            
+                                             <%= hidden_field_tag :flag_employee, @employee.flag_employee , :id => "value-input", :readonly => true%>
+                                          </div>
+                                      </div>
+      <div id="form-target">                                 
+        <div class="grid simple">
+          <div class="grid-body no-border has-tab">
+            <%= render '/employees/tab_nav'%>
+            <div class="tab-content">
+              <section class="tab-pane active" id="survey">
+                <%= form_for @employee_survey do |f| %>
+                  <div class="form-group row">
+                    <% @admin_survey.each_with_index{|question, i| %>
+                      <%= hidden_field_tag "admin_survey_id[#{question.id}]", question.id%>
+                      <label class="form-label col-sm-12">
+                        <strong class="badge badge-success"><%= i+1 %></strong> <%= question.question_title %>
+                      </label>
+                      <% if question.question_type == "Text Box" %>
+                        <div class="controls col-sm-12">
+                          <%= text_field_tag "content_textbox[#{question.id}]", "", class: "form-group row full-width", :placeholder => "Write your answer here" %>
+                        </div>
+                      <% elsif question.question_type == "Text Area" %>
+                        <div class="controls col-sm-12">
+                          <%= text_area_tag "content_textarea[#{question.id}]", "", :class => "form-group row full-width", :rows => "4", :placeholder => "Write your answer here"%>
+                        </div>
+                      <% else %>
+                        <div class="controls col-sm-12">
+                          <div class="input-append success date">
+                            <%= text_field_tag "content_datepicker[#{question.id}]", "", :class => "form-group row full-width", :placeholder => "Write your answer here" %>
+                            <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+                          </div>
+                        </div>
+                      <% end %>
+                  <% } %>
+                  <%= f.hidden_field :employee_id, :value => params[:id]%>
+                  <%= f.submit "Next", class: "btn btn-success"%>
+                  </div>
+                <% end %>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<script type="text/javascript">
+  <!-- //Disable form -->
+  $(document).ready(function(){
+  var check=document.getElementById("value-input").value == "false";
+  //check will be true or false
+  if (check){
+    $("#form-target :input").prop("disabled", false);
+   }
+  else{
+    $("#form-target :input").prop("disabled", true);
+    $("#form-target a").attr("disabled", "disabled");;
+  }
+    });
+  
+  $('.input-append.date').datepicker({
+  autoclose: true,
+  todayHighlight: true
+  });
+</script>

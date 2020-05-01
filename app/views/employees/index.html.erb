@@ -1,0 +1,180 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="/employees" class="active">Employee</a></li>
+  </ul>
+  <div class="page-title">
+    <i class="fa fa-user"></i>
+    <h3><span class="semi-bold">Employee</span></h3> 
+  </div>
+  <div class="grid simple">
+    <div class="grid-title no-border"></div>
+    <div class="grid-body no-border">
+    <div class="row toolbar-block">
+      <div class="col-md-4">
+        <div class="dataTables_filter" id="example3_filter">
+          <div class="controls">
+            <div class="input-group">
+              <%= text_field_tag :search, '', class: 'form-control search', placeholder: 'Search Record' %>
+              <span class="input-group-addon ">
+                <i class="fa fa-search"></i>
+              </span>
+            </div>
+          </div>
+      </div>
+    </div>
+<!--          <div class="col-md-8">
+        <div class="toolbar pull-right" id="toolbar_main">
+            <div class="table-tools-actions">
+                <%= link_to new_employee_path, id: "_new", class: "btn btn-success", remote: true do %>
+                  Add New <i class="fa fa-plus"></i>
+                <% end %>
+                  <div class="btn-group">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="fa fa-gear"></span> <span class="caret"></span></button>
+                      <ul class="dropdown-menu right-edge">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                                    </div>
+                                </div>
+                            </div>
+                          <div class="toolbar pull-right hide" id="toolbar_upload">
+                              <div class="table-tools-actions">
+                                  <button class="btn"><span class="fa fa-cloud-upload"></span> Upload</button>
+                                    <div class="separator">&nbsp;</div>
+                                </div>
+                            </div>
+                          <div class="toolbar pull-right hide" id="toolbar_def">
+                              <div class="table-tools-actions">
+                                  <button class="btn"><span class="fa fa-edit"></span> Edit</button> 
+                                    <button class="btn" data-toggle="modal" data-target="#confirm_modal"><span class="fa fa-trash"></span> Remove</button> 
+                                    <div class="separator">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <section class="filter-adv">
+                      <div class="panel-group" id="accordion" data-toggle="collapse">
+                          <div class="panel panel-default">
+                          <!--
+                            <div class="panel-heading">
+                              <h4 class="panel-title">
+                                <a class="collapsed bold text-uppercase" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                   <i class="fa fa-filter"></i> Filter Data
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                              <div class="panel-body gen-form">
+                                  <div class="row column-seperation">
+                                      <div class="col-md-6">
+                                          <div class="form-group row">
+                                              <label class="form-label col-sm-4">NIK </label>
+                                              <div class="controls col-sm-8">
+                                                   <input type="text" class="full-width">
+                                                </div>
+                                          </div>
+                                             <div class="form-group row">
+                                               <label class="form-label col-sm-4">Name </label>
+                                               <div class="controls col-sm-8">
+                                                   <input type="text" class="full-width">
+                                                </div>
+                                             </div>
+                                              <div class="form-group row">
+                                               <label class="form-label col-sm-4">Contract Status </label>
+                                               <div class="controls col-sm-8">
+                                                   <select class="full-width">
+                                                      <option>Select</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             <div class="form-group row">
+                                               <label class="form-label col-sm-4">Organization </label>
+                                               <div class="controls col-sm-8">
+                                                   <select class="full-width">
+                                                      <option>Select</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                          <div class="form-group row">
+                                              <label class="form-label col-sm-4">Employee Status</label>
+                                              <div class="controls col-sm-8">            
+                                                   <select class="full-width">
+                                                      <option>Select</option>
+                                                   </select>
+                                                </div>
+                                          </div>
+                                             <div class="form-group row">
+                                               <label class="form-label col-sm-4">Work Start </label>
+                                               <div class="controls col-sm-8">  
+                                                  <div class="input-append success date">
+                                                        <input type="text" class="form-control full-width">
+                                                        <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+                                                    </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group row">
+                                               <label class="form-label col-sm-4">No ID </label>
+                                               <div class="controls col-sm-8">             
+                                                   <input type="text" class="full-width">
+                                                </div>
+                                             </div>
+                                             <div class="form-group row">
+                                               <label class="form-label col-sm-4">Organization </label>
+                                               <div class="controls col-sm-8">             
+                                                   <select class="full-width">
+                                                      <option>Select</option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                <button class="btn full-width bold text-uppercase">Search</button>
+                              </div>
+                            </div> -->
+                          </div>
+            </div>
+                    </section>
+          <table class="table no-more-tables table-striped table-hover">
+            <thead>
+              <tr>
+                <th style="width:15%">Nik</th>
+                <th style="width:20%">Name</th>
+                <!-- <th style="width:15%">Status</th>
+                <th style="width:15%">Due date</th>
+                <th style="width:20%">Organization</th>
+                <th style="width:15%">Position</th>
+                <th style="width:20%; text-align: left;">Shift</th> -->
+                <th colspan="2"  style="width:20%;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @employees.each do |employee| %>
+                <tr class="new-rec">
+                  <td class="<%= params[:controller] == 'employee_surveys' ? 'active' : ''%>"><%= link_to employee.nik, new_employee_survey_path(:id => employee.id)%></td>
+                  <td><%= employee.name %></td>
+                  <td>
+                    <%= link_to employee_path(employee.id), :method => "delete", id: "_delete", :onclick => "return confirm('Are you sure want to permanently delete?')",
+                      class: "btn btn-primary" do %>
+                      Delete <i class="fa fa-del"></i>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="row dataTables_wrapper"><%= render 'layouts/paging', records: @employees, records_count: @employees_count %></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" employee="dialog" tabindex="-1" id="myModal" class="modal fade">
+  <%= render 'new' if @employee.present? && action_name == "create" %>
+  <%= render 'edit' if @employee.present? && action_name == "update" %>
+</div><!-- modal -->

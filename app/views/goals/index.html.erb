@@ -1,0 +1,206 @@
+  <%= javascript_tag render(:template => 'goals/jsManager.js', :formats => [:js]) %>
+
+<div class="page-content condensed">
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li><p>YOU ARE HERE</p></li> 
+      <li><%= link_to "Goal", goal_values_path %></li>
+      <li><a onclick="return false;" class="active"></a></li>
+    </ul>
+
+     <div class="page-title"> 
+      <i class="fa fa-user"></i>
+      <h3>Goal</span></h3>  
+    </div> 
+
+  <div class="grid simple">
+    <div class="grid-body no-border has-tab"> 
+     <%= render '/goal_values/tab_nav'%>        
+      <div class="tab-content">
+        <section class="tab-pane active">
+          <div class="row toolbar-block">
+           <div class="col-md-4">
+                  <div class="dataTables_filter" id="example3_filter">
+                       <div class="controls">
+                              <div class="input-group">
+                                <%= form_tag(search_goals_path, :method => "get", id: "search-form") do %>
+                                  <%= text_field_tag :goal, params[:goal], placeholder: "Search Goal", class: "search form-control" %>
+                                    <span class="input-group-addon ">
+                                    <i class="fa fa-search"></i>
+                                  </span>
+                                <% end %>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-8">
+              <div class="toolbar pull-right">
+                <%= link_to "<span class=\"fa fa-plus\"></span> Add New".html_safe, new_goal_path, :remote => true, :class => "btn btn-success" %>
+                <%= button_tag "Tools <i class=\"fa fa-angle-down\"></i>".html_safe, :class => "btn btn-default dropdown-toggle", :"data-toggle" => "dropdown" %>
+                <ul class="dropdown-menu pull-right">
+                  <li><%= link_to "Export to CSV", goals_path(format: "csv", id: params[:id]) %></li>
+                  <li><%= link_to "Export to Excel", goals_path(format: "xls", id: params[:id]) %></li>
+                  <li data-toggle="modal" data-target="#goal_modal"><a>Import from CSV</a></li>
+                </ul>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_upload">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-cloud-upload\"></span> Upload".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#upload_modal" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+              <div class="toolbar pull-right hide" id="toolbar_goal">
+                <div class="table-tools-actions">
+                  <%= button_tag "<span class=\"fa fa-edit\"></span> Edit".html_safe, :class => "btn", :onclick => "edit_goal()", :id => "button_edit_goal" %>
+                  <%= button_tag "<span class=\"fa fa-trash\"></span> Remove".html_safe, :class => "btn", :"data-toggle" => "modal", :"data-target" => "#confirm_modal", :id => "button_remove_goal", :"data-section" => "goal", :onclick => "set_delete_url('/goals/delete')" %>
+                  <div class="separator">&nbsp;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <table class="table no-more-tables table-striped table-hover" id="goal">
+            <thead>
+              <tr>
+                <th style="width: 45px" >
+                  <div class="checkbox check-default">
+                    <input id="checkall_goal" data-section="goal" data-goal="parent" type="checkbox" value="1" class="checkall parent-goal">
+                    <label for="checkall_goal"></label>
+                  </div>
+                </th>
+                <th>Goal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @goals.count != 0 %>
+                <% @goals.each do |goal| %>
+                  <%= render 'goals/data', :goal => goal%>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan='6' align='center'>No Data Found !</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+    <br class="clear"/>
+  </div>
+ </div>
+ </div>
+
+  <div class="modal fade" id="goal_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Import goals</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag import_goals_path(:id => params[:id]), multipart: true do %>
+       <%= file_field_tag :file %>
+      </div>
+      <div class="modal-footer">
+        <%= submit_tag "Import", :class => "btn btn-primary" %>
+        <%= link_to "Download Template", goals_path(format: "csv", id: params[:id]), :class => "btn btn-success" %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  function datePicker(){
+    $('.input-append.date').datepicker({
+      autoclose: true,
+      todayHighlight: true
+    });
+  }
+
+  $(function(){
+    datePicker();
+    $('.grid-body').each(function(index){
+     var new_rec = $(this).find('.new-rec').html();
+     var add_btn = $(this).find('.btn-success'),
+     table = $(this).find('tbody');
+     $(this).find('.new-rec').remove();
+
+      add_btn.click(function(){
+        $('<tr class="new-rec"></tr>').prependTo(table);
+        row = table.children('tbody > tr:first-child');
+        $(row).html(new_rec);
+        //Form Function
+        datePicker();
+      })
+    });
+  });
+
+  $(".checkall").each(function(){
+    $(this).click(function() {
+      parent = $(this)
+      section = $(this).attr("data-section")
+      children = $(".child-" + section)
+      
+      show_button(parent)
+      
+      children.each(function(){
+        if (parent.is(':checked')) {
+          $(this).prop('checked', true)
+          $(this).parent().parent().parent().addClass('row_selected')
+        } else{
+          $(this).prop('checked', false)
+          $(this).parent().parent().parent().removeClass('row_selected')
+        }
+      })
+    })
+  })
+
+  $(".child-box").each(function(){
+    $(this).click(function() {
+      section = $(this).attr("data-section")
+      children = $(".child-" + section)
+      $(this).parent().parent().parent().toggleClass('row_selected')
+
+      show_button($(this))
+      
+      selected_count = 0
+      children.each(function(){ if ($(this).is(':checked')) { selected_count += 1 } })
+      if (selected_count==children.length) {
+        $(".parent-" + section).prop('checked', true)
+      } else{
+        $(".parent-" + section).prop('checked', false)
+      };
+    })
+  })
+
+  // $('table .checkbox input').click( function() {
+  //   console.log($(this).attr("data-value"))
+  //   if($(this).is(':checked')){      
+  //     $(this).parent().parent().parent().toggleClass('row_selected');
+  //     if($(this).parent().parent().parent().hasClass('new-rec')){
+  //      $(this).parents('section').find('#toolbar_upload').removeClass('hide');
+  //      $(this).parents('section').find('#toolbar_def').addClass('hide'); 
+  //    }else{
+  //      $(this).parents('section').find('#toolbar_upload').addClass('hide');
+  //      $(this).parents('section').find('#toolbar_def').removeClass('hide');  
+  //    }         
+  //   } else { 
+  //     $(this).parent().parent().parent().toggleClass('row_selected');  
+  //     $(this).parents('section').find('#toolbar_upload, #toolbar_def').addClass('hide');
+  //   }
+  // });
+
+  $('[data-addform]').click(function(){
+    var $parent = $(this).parent(),
+    $field = $(this).prev('.addform'),
+    $remove = '<a href="javascipt;"><i class="fa fa-remove"></i></a>';
+
+    $field.clone().insertBefore($(this)).find('input').val('');
+  });
+  $('.addform a').live("click",function(){
+    $(this).parent().remove();
+  });
+  $(".select-autocomplete").select2();
+</script>

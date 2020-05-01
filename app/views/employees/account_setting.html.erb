@@ -1,0 +1,101 @@
+<div class="container-fluid">
+    <ul class="breadcrumb">
+        <li><p>YOU ARE HERE</p></li> 
+        <li><a href="#" class="active">User Setting</a></li>
+    </ul>
+
+    <div class="page-title">	
+        <i class="fa fa-cogs"></i>
+        <h3>User - <span class="semi-bold">Setting</span></h3>	
+    </div>  
+    <div class="grid simple">
+        <div class="grid-title no-border"></div>
+        <div class="grid-body no-border">
+
+            <!-- BEGIN EDIT -->
+            <div class="row">
+                <!-- PANEL PASSWORD -->
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h3>Password</h3>
+                                <h5>Change your password or recover your current one.</h5>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <h3></h3>
+                            <form class="form-horizontal col-md-12">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">Current Password</label>
+                                    <div class="col-sm-6">
+                                        <input type="email" class="form-control" id="inputEmail3" placeholder="Current Pasword">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">New Password</label>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" id="inputPassword3" placeholder="New Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Verify Password</label>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control" id="inputPassword3" placeholder="Verify Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PANEL EMAIL -->
+                <div class="col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h3>Account</h3>
+                                <h5>Change your basic account and email settings.</h5>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <h3></h3>
+                            <%= form_for @email, :url => change_setting_employees_path, :class => 'form-horizontal col-md-12' do |email|%>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">Corporate Email</label>
+                                    <div class="col-sm-6">
+                                        <%= email.text_field :email, class: 'form-control', placeholder: 'Corporate Email'%>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+                                    <div class="col-sm-6">
+                                        <%= email.password_field :password, class: 'form-control', placeholder: 'Password'%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPassword3" class="col-sm-4 control-label">Verify Password</label>
+                                    <div class="col-sm-6">
+                                        <%= email.password_field :password_confirmation, class: 'form-control', placeholder: 'Verify Password'%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-9">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

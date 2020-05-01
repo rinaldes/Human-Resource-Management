@@ -1,0 +1,161 @@
+<%= tinymce_assets %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="">Knowledge Management</a></li>
+    <li><a href="#" class="active">New</a></li>
+  </ul>
+  <div class="page-title">
+    <i class="fa fa-envelope"></i>
+    <h3>Knowledge <span class="semi-bold">Management</span></h3>
+  </div>
+  <div class="grid simple">
+    <%= form_for @knowledge, :html => { :multipart => true } do |f| %>
+      <div class="grid-title no-border"></div>
+      <div class="grid-body no-border">
+        <div class="gen-form" action="">
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group row">
+                <label class="form-label col-sm-12"><strong>Article Name</strong></label>
+                <div class="controls col-sm-12">
+                  <%= f.text_field :article_name, :class => "col-md-12", :placeholder => "Article Name", selector: 'textarea.editor' %>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="form-label col-sm-12"><strong>Tag </strong></label>
+                <div class="controls col-sm-12">
+                  <%= autocomplete_field_tag :tags, @tags, autocomplete_tag_name_knowledges_url, 'data-delimiter' => '#', :multiple => true, class: "autocomplete-field-input",
+                      placeholder: "Tag" %>
+                    <span class="help">Separate tags with '#'</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-6 hide end_date_ticker">
+                    <label class="form-label col-sm-12"><strong>End Date </strong></label>
+                    <div class="controls col-sm-12">
+                      <%= f.text_field :end_date %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+
+                <div>
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Categories</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Most Used Tags</a></li>
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane padding-0 active" id="home"><div class="controls">
+                        <div class="well col-sm-12 knowledge-category" style="margin: 5px 0 0 0;">
+                          <% @categories.each do |category| %>
+                            <div class="article-category col-sm-10">
+                              <span class="category-label"><strong><%= category[0] %></strong></span>
+                            </div>
+                            
+                            <% category[1].each{|ctg| %>
+                              <div class="col-sm-8 m-l-15 article-category <%= ctg.name.downcase %>">
+                                <input type="checkbox" id="<%= ctg.name %>" onchange="myFunction()" <%= 'checked' if @current_categories && @current_categories.include?(ctg.id) %>>
+                                <span class="category-label"><%= ctg.name %></span>
+                              </div>
+                              <br/>
+                            <% } %>
+                          <% end %>
+                          <%= f.hidden_field :category_id, id: "categorynya" %>
+                        </div>
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane padding-0" id="profile">
+                      <div class="controls">
+                        <div class="well knowledge-category" style="margin: 5px 0 0 0;">
+                          <% @most_used_tags.each{|tag| %>
+                            <%= link_to raw("<u>#{tag.tag_name}</u>"), 'javascript:void(0)', class: "btn btn-default btn-small",
+                              onclick: "$('#tags').val($('#tags').val()+'#{tag.tag_name}#')" %>&nbsp;
+                            <% } %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+            </div>
+            <div class="tab-pane active">
+              <%= f.text_area :content,  :id => "text-editor", :placeholder => "Enter text  ...", :class => "form-control tinymce", :rows => "10" %>
+            </div>
+            <div class="col-sm-3">
+              <div class="profile-user del-mrg">
+                <a class="opt-profile change tip btn-upload" data-toggle="tooltip" data-placement="top" data-original-title="Upload">
+                  <i class="fa fa-upload" onclick="$('#knowledge_image').click();"></i>
+                </a>
+                <%= f.file_field :image, class: "opt-profile change tip hidden fa fa-upload", :data => {toggle: 'tooltip', placement: 'top', 'original-title' => 'Upload'},
+                    placeholder: "Upload your image", :onchange =>"readURL(this);"%>
+                  <% if @knowledge.image.present? %>
+                    <img id="img_prev" src="<%= @knowledge.image %>" alt="profile" />
+                  <% else %>
+                    <img id="img_prev" src="/assets/gallery/Actions-insert-image-icon.png"/>
+                  <% end %>
+                </div>
+            </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="pull-right">
+              <button type="button" class="btn btn-success btn-cons" onclick="$('.mce-i-preview').click()">Preview</button>
+              <%= f.submit 'Publish', class: "btn btn-success btn-cons" %>
+                <%= f.submit 'Save', class: "btn btn-success btn-cons" %>
+                </div>
+              </div>
+            </div>
+            </div>
+          <% end %>
+          <script type="text/javascript">
+  $(document).ready(function() {
+    myFunction()
+    $('div.ticker input').click(function() {
+      if (this.checked)
+        $('.end_date_ticker').removeClass('hide')
+      else
+        $('.end_date_ticker').addClass('hide')
+    })
+    $('#knowledge_end_date').datepicker({
+      autoclose: true,
+      todayHighlight: true
+    });
+  });
+  function myFunction() {
+    var add = "";
+    <% @origin_categories.each do |cate| %>
+      if (document.getElementById("<%= cate.name %>") && document.getElementById("<%= cate.name %>").checked) {
+        add += "<%= cate.name %>, ";
+      }
+    <% end %>
+    $('#categorynya').val(add);
+  }
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#img_prev').attr('src', e.target.result).width(240).height(250);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  tinyMCE.init({
+    selector: 'textarea.editor'
+  });
+</script>
+<%= tinymce %>

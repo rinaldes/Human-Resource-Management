@@ -1,0 +1,235 @@
+<style type="text/css">
+    .ui-autocomplete {
+        z-index:2147483647;
+        width: 174px !important;
+    }
+</style>
+<div class="container-fluid">
+    <ul class="breadcrumb">
+
+        <li><p>YOU ARE HERE</p></li> 
+        <li><a href="#" class="active">Appraisal</a></li>
+    </ul>
+
+        <div class="page-title">
+      <i class="fa fa-user"></i>
+      <h3>Appraisal - <span class="semi-bold">New</span></h3>
+    </div> 
+
+    <div class="grid simple">
+    <div class="grid-title no-border"></div>
+    <div class="grid-body no-border">
+      <%= form_for @appraisal do |f|%>
+        <div class="row">
+          <div class="form-horizontal col-md-6">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Employee Name</label>
+              <div class="col-sm-8">
+                <%= f.hidden_field :employee_id %>
+                <%= f.autocomplete_field :created_at, autocomplete_employee_name_blast_messages_url, class: "autocomplete-field-input form-control", placeholder: "Employee", :onchange => "setValue()" %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-4 control-label">Organization</label>
+                <div class="col-sm-8">
+                  <%= text_field_tag :organization,'', :placeholder => "Orgnization", :class => "form-control", :disabled => true %>
+                </div>
+         	</div>
+         	<div class="form-group row edit-field">
+                <label class="form-label col-sm-2">Evaluator</label>
+                <div class="controls col-sm-3">
+                    <%= f.autocomplete_field :evaluator, autocomplete_employee_name_blast_messages_url, class: "autocomplete-field-input", placeholder: "Evaluator" %>
+                </div>
+              </div>
+
+         	<div class="form-group row edit-field">
+                <label class="form-label col-sm-2">Periode</label>
+                <div class="controls col-sm-6 row">	:					 
+                      <div class="col-xs-8">
+                    	<div class="pull-left input-append success date p-r-10">
+                            <%= f.text_field :start_period, class: "form-control full-width"%>
+                            <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+                        </div>
+                        <span class="appraisal-addon"><strong>TO</strong></span>
+                        <div class="pull-left input-append success date p-r-10">
+                          <%= f.text_field :start_period, class: "form-control col-md-2"%>
+                            <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+         	</div>
+      <div class="col-md-12">
+				<div class="row">
+		            <div class="col-md-12">
+		                <section class="panel">
+                    <% if AttendanceSetting.last.appraisal_setting == "component" %>
+		                    <div class="panel-body toggle-heading">
+		                    	<div class="col-md-12">
+			                        <div class="toolbar pull-right" id="toolbar_main">
+				                    	<div class="table-tools-actions">
+				                        	<%= link_to_add_association f, :appraisal_components, :"data-association-insertion-node" => "tbody", :"data-association-insertion-method" => "append", :class => "btn btn-success" do %>
+			                                    <span class="fa fa-plus"></span> add component
+			                                <% end %>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class="col-md-12">
+			                    	<%= render 'table_new', :f => f %>
+                        <% else %>
+                            <%= render 'table_goal', :f => f %>
+                            <%= render 'table_value', :f => f %>
+                            <div style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto">
+                            <div class="col-md-2">
+                              > 60
+                            </div>
+                              <div id="m" class="col-md-3 m1" style="border: 1px solid black; height: 50px;">
+                                <b>DEVELOPMENT NEEDED</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m2" style="border: 1px solid black; height: 50px;">
+                                <b>EXCELLENT</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m3" style="border: 1px solid black; height: 50px;">
+                                <b>ROLE MODEL</b>
+                              </div>
+                              <div class="col-md-2">
+                              45.1 - 60.0
+                              </div>
+                              <div  id="m" class="col-md-3 m4" style="border: 1px solid black; height: 50px;">
+                                <b>DEVELOPMENT NEEDED</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m5" style="border: 1px solid black; height: 50px;">
+                                <b>STRONG CONTRIBUTOR</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m6" style="border: 1px solid black; height: 50px;">
+                                <b>EXCELLENT</b>
+                              </div>
+                              <div class="col-md-2">
+                              0.0 - 45.0
+                            </div>
+                              <div  id="m" class="col-md-3 m7" style="border: 1px solid black; height: 50px;">
+                                <b>UNSATISFACTORY</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m8" style="border: 1px solid black; height: 50px;">
+                                <b>DEVELOPMENT NEEDED</b>
+                              </div>
+                              <div  id="m" class="col-md-3 m9" style="border: 1px solid black; height: 50px;">
+                                <b>DEVELOPMENT NEEDED</b>
+                              </div>
+                              <div class="col-md-3"></div>
+                             <div class="col-md-3">
+                                0.0 - 14.0
+                              </div>
+                              <div class="col-md-3">
+                                14.1 - 26.6
+                              </div>
+                              <div class="col-md-3">
+                                26.7 - 40.0
+                              </div>
+                            </div>
+                            
+                          <% end %>
+			                    </div>
+		                    </div>
+		                </section>
+		            </div>
+		        </div>
+            </div> <!-- col-md-12 -->
+            <% end %>
+<script type="text/javascript">
+		$('.input-append.date').datepicker({
+			autoclose: true,
+			todayHighlight: true
+	   });
+
+	function setValue(){
+		$.ajax({
+	        url: '<%= get_value_appraisals_path %>',
+	        type: 'get',
+	        data: {
+	          name: $('#appraisal_created_at').val()
+	        }
+	    })
+	}
+</script>
+<script type="text/javascript">
+    $('.warn1').hide();
+    // we used jQuery 'keyup' to trigger the computation as the user type
+$('.bobot2').keyup(function () {
+ 
+    // initialize the sum (total price) to zero
+    var sum = 0;
+     
+    // we use jQuery each() to loop through all the textbox with 'price' class
+    // and compute the sum for each loop
+    $('.bobot2').each(function() {
+        sum += Number($(this).val());
+    });
+    if(sum > 100){
+        $('.warn1').show();
+    }else{
+    // set the computed value to 'totalPrice' textbox
+    $('.total2').val(sum);    
+    }
+    matriks();
+});
+$('.bobot').keyup(function () {
+ 
+    // initialize the sum (total price) to zero
+    var sum = 0;
+     
+    // we use jQuery each() to loop through all the textbox with 'price' class
+    // and compute the sum for each loop
+    $('.bobot').each(function() {
+        sum += Number($(this).val());
+    });
+    // set the computed value to 'totalPrice' textbox
+    $('.total').val(sum);
+    matriks();
+});
+function matriks(){
+  var goal = $('.total').val() * 60/100;
+  var value = $('.total2').val() * 40/100;
+  if(goal <= 45 && value <= 14) {
+    mclear();
+    $('.m7').css("background-color"," #7FFF00");  
+  }else if(goal <= 45 && value <= 26){
+    mclear()
+    $('.m8').css("background-color"," #7FFF00");
+  }else if(goal <= 45 && value <= 40){
+    mclear()
+    $('.m9').css("background-color"," #7FFF00");
+  }else if(goal <= 60 && value <= 14){
+    mclear()
+    $('.m4').css("background-color"," #7FFF00");
+  }else if(goal <= 60 && value <= 26){
+    mclear()
+    $('.m5').css("background-color"," #7FFF00");
+  }else if(goal <= 60 && value <=40){
+    mclear()
+    $('.m6').css("background-color"," #7FFF00");
+  }else if(goal > 60 && value <= 14){
+    mclear()
+    $('.m1').css("background-color"," #7FFF00");
+  }else if(goal > 60 && value <= 26){
+    mclear()
+    $('.m2').css("background-color"," #7FFF00");
+  }else if(goal > 60 && value <= 40){
+    mclear()
+    $('.m3').css("background-color"," #7FFF00");
+  };
+}
+function mclear(){
+  $('.m1').css("background-color","white");
+  $('.m2').css("background-color","white");
+  $('.m3').css("background-color","white");
+  $('.m4').css("background-color","white");
+  $('.m5').css("background-color","white");
+  $('.m6').css("background-color","white");
+  $('.m7').css("background-color","white");
+  $('.m8').css("background-color","white");
+  $('.m9').css("background-color","white");
+}
+</script>

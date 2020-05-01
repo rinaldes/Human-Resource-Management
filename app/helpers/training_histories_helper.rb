@@ -1,0 +1,2 @@
+module TrainingHistoriesHelper
+end

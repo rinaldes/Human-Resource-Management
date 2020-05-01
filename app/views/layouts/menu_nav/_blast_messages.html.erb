@@ -1,0 +1,7 @@
+
+				<li class="">
+					<%= link_to blast_messages_path, class: (controller_name.downcase=="blast_messages" ? "cur tip" : "tip"),
+					  data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Blast Message'} do %>
+  					<i class="fa fa-envelope"></i> <span class="title"><%= t(:blast_message) %></span>
+					<% end %>
+				</li>

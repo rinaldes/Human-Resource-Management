@@ -1,0 +1,13 @@
+<% if params[:action] != "update_detail" %>
+    <tr id="data_<%= detail.id %>">
+<% end %>
+    <td>
+    	<div class="checkbox check-default">
+            <input id="checkbox<%= detail.id %>" type="checkbox" value="<%= detail.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= detail.id %>"></label>
+        </div>
+    </td>
+    <td><%= detail.employee.name %></td>
+<% if params[:action] != "update_detail" %>
+    </tr>
+<% end %>

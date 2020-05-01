@@ -1,0 +1,3 @@
+$("#user_management tbody").html("<%= j(render 'users_list', users: @users) %>");
+$(".dataTables_wrapper").html("<%= j(render 'layouts/paging', records: @users, records_count: @users_count) %>");
+paging()

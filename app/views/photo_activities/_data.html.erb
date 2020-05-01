@@ -1,0 +1,13 @@
+<% if params[:action] != "update" %>
+    <tr id="data_<%= photo_activity.id %>">
+<% end %>
+    <td>
+    	<div class="checkbox check-default">
+            <input id="checkbox<%= photo_activity.id %>" type="checkbox" value="<%= photo_activity.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= photo_activity.id %>"></label>
+        </div>
+    </td>
+    <td><%= photo_activity.name %></td>
+<% if params[:action] != "update" %>
+    </tr>
+<% end %>

@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to appraisals_path, class: (controller_name.downcase=="appraisals" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Appraisal'} do %>
+					<i class="fa fa-fire"></i>
+					<span class="title" ><%= t(:appraisal) %></span>
+					<% end %>
+				</li>

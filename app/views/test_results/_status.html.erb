@@ -1,0 +1,22 @@
+<%= form_for(test_result, :for_applicant => 1 , html: { role: "form", multipart: true}, remote: true) do |f| %>
+<% if params[:action] != "update" %>
+    <tr id="data_<%= test_result.id %>">
+<% end %>
+	<td>
+        <div class="checkbox check-default">
+            <input id="checkbox<%= test_result.id %>" type="checkbox" value="<%= test_result.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= test_result.id %>"></label>
+        </div>
+    </td>
+    <td><%= test_result.applicant_name %></td>
+    <td><%= link_to test_result.attachment_url.split("/").last , test_result.attachment_url %></td>
+    <td><%= test_result.email %></td>
+    <td><%= f.hidden_field :id, :value => params[:id] %>
+    <%= f.select :cv_status, options_for_select(['Pending', 'Ok', 'Rejected']), {:prompt => test_result.cv_status},{:class => "size-auto"}%></td>
+    <td>
+        <%= f.submit "update", class: "btn btn-success" , onclick: "update_status_test();" %>
+    </td>
+<% if params[:action] != "update" %>
+    </tr>
+<% end %>
+<% end %>

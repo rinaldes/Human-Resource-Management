@@ -1,0 +1,1 @@
+$('#data_absence').html("<%= j(render 'data_absence', :absences => @absences) %>")

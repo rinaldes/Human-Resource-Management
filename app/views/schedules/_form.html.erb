@@ -1,0 +1,133 @@
+<style type="text/css">
+  .ui-autocomplete {
+    z-index:2147483647;
+    width: 174px !important;
+  }
+</style>
+<div class="modal-body">
+  <%= form_for Schedule.new do |f|%> 
+  <div id="abc" hidden>
+  <%= label_tag "End period harus diatas start period" %>
+  </div>
+    <div class="form-group row">
+      <label class="form-label col-sm-2">Periode </label>
+      <div class="controls col-sm-2">						 
+        <div class="input-append success date">
+          <%= f.text_field :start_period, class: 'form-control', id: 'start_period', :onchange => 'myFunction()'%>
+          <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+        </div>
+      </div>
+      <div class="pull-left">to
+      </div>
+      <div class="controls col-sm-2">						 
+        <div class="input-append success date">
+          <%= f.text_field :end_period, class: 'form-control', id: 'end_period', :onchange => 'myFunction()' %>
+          <span class="add-on"><span class="arrow"></span><i class="fa fa-th"></i></span> 
+
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="form-label col-sm-2">Shift </label>
+      <div class="controls col-sm-3">						 
+        <%= f.select :shift_id, options_for_select(Shift.all.map{|x| [x.name, x.id]}), {:prompt => '--select--'},{:class => "form-control"}%>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="form-label col-sm-2">Type</label>
+      <div class="controls col-sm-3">						 
+        <%= f.select :schedule_type, options_for_select(['Single', 'Many']), {:prompt => '--select--'},{:class => "form-control", :onchange => "generateForm();"} %>
+        <%= hidden_field_tag :many_employee %>
+      </div>
+    </div>
+    <hr />
+    <div class="form-no-horizontal-spacing">
+     	<div class="row column-seperation">
+        <div class="col-md-12" id='form_select'>
+          <div class="form-group row">
+          <h4 class="semi-bold col-sm-6" id='judul_form'>Select Many Employee</h4>
+            
+            <div id='tool_organization'>
+              <label class="form-label col-sm-2">Organization </label>
+              <div class="controls col-sm-3">                   
+                <%= f.select :organization_id, options_for_select(Employee.all.map{|x| [x.name, x.id]}), {:prompt => '--select--'},{:class => "form-control", :onchange => "getEmployee()"} %>
+              </div>
+            </div>
+            
+          </div>
+          
+          <table class="table table-hover no-more-tables">            
+            <tbody>
+              <section class="add-group col-xs-12">
+              <div class="addform clearfix visiblebutton">
+              <%= f.autocomplete_field :employee_id, autocomplete_employee_name_schedules_path, class: "autocomplete-field-input", placeholder: "Employee" %>
+               
+              </div>   
+              <%= link_to_add_association f, :schedule_details, :"data-association-insertion-method" => "append" do %><div id="asd">
+                <button class="btn btn-primary" data-addform="">Add Employee <i class="fa fa-plus"></i></button>
+              </div>
+              <% end %>
+              <%= f.fields_for :schedule_details do |schedule_detail| %>
+                <%= render 'schedule_detail_fields', :f => schedule_detail %>
+              <% end %>
+            </section>                
+            </tbody>
+          </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  <div class="modal-footer">
+    <div class="form-actions">
+      <div class="pull-right">
+        <button class="btn btn-success btn-cons" id='sendButton' onclick='check_ceck()'><i class="icon-ok"></i> Save</button>
+      </div>
+    </div></div>
+  </div>
+  <% end %>
+<script type="text/javascript">
+function myFunction() {
+  $(document).ready(function(){
+      $('#sendButton').attr('disabled',true);
+      var a = $('#start_period').val().toString().split("/");
+      var b = $('#end_period').val().toString().split("/");
+      if(a[0] <= b[0] && a[1] <= b[1] && a[2] <= b[2]){
+        $('#sendButton').attr('disabled', false);  
+         $('#abc').hide();         
+      }
+      else{
+        $('#sendButton').attr('disabled',true);
+        $('#abc').show();
+      }
+  });
+}
+
+function generateForm(){
+	if($('#schedule_schedule_type').val() == 'Single'){
+        $('#form_select').show();
+       $('#judul_form').html('Select Employee');
+       $('#tool_organization').hide();
+       $('#asd').hide();
+       $('#asdd').show();
+
+	}else if($('#schedule_schedule_type').val() == 'Many'){
+        $('#form_select').show();
+        $('#judul_form').html('Select Many Employee');
+        $('#tool_organization').hide();
+        $('#asd').show();
+        $('#asdd').hide();
+	}else{
+        $('#form_select').hide();
+	}
+}
+
+$(document).ready(function () {
+    generateForm();
+});
+
+$('.input-append.date').datepicker({
+            autoclose: true,
+            todayHighlight: true
+       });
+</script>

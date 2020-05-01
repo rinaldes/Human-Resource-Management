@@ -1,0 +1,11 @@
+<% roles.each do |role| %>
+	<tr class="new-rec">
+    	<td><%= role.name %></td>
+    	<td><%= link_to edit_role_path(role), id: "_edit", class: "btn btn-primary", remote: true do %>
+			Edit <i class="fa fa-edit"></i>
+		<% end %></td>
+    	<td><%= link_to role_path(role.id), :method => "delete", id: "_delete", :onclick => "return confirm('Are you sure want to permanently delete?')" , class: "btn btn-primary" do %>
+			Delete <i class="fa fa-del"></i>
+		<% end %></td>
+	</tr>
+<% end %>

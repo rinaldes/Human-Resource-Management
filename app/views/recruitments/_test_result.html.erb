@@ -1,0 +1,53 @@
+<table class="table no-more-tables table-striped table-hover">
+<thead>
+    <tr>
+        <th>Applicant Name</th>
+        <th>Attachment</th>
+        <th>Email</th>
+        <th>Apply Position</th>
+        <th>Score</th>
+        <th>Status</th>
+    </tr>
+</thead>
+<tbody>
+
+    <% @recruitment.test_results.where(:cv_status => "Ok").each do |test| %>
+        <tr>
+            <td>
+                <%= test.applicant_name %>
+            </td>
+            <td>
+                <%= link_to test.attachment_url.split("/").last , test.attachment_url %>
+            </td>
+            <td>
+                <%= test.email %>
+            </td>
+            <td>
+                <%= test.position.name %>
+            </td>
+            <td>
+                <% if test.score == nil %>
+                <% if @recruitment.status.downcase == "open" %>
+                    <%= link_to 'Set Score', edit_test_result_path(test), remote: true %>
+                <% else %>
+                    Cannot Set Score
+                <% end %>
+                <% else %>
+                	<%= test.score %>    
+                <% end %>
+            </td>
+            <td>
+                <% if test.status.downcase == "pending" %>
+                    <% if @recruitment.status.downcase == "open" %>
+                        <%= link_to test.status , edit_test_result_path(test, :for_pending => test.recruitment_id) , remote: true %>
+                    <%else%>
+                        <%= test.status %>
+                    <% end %>
+                <% else %>
+                <%= test.status %>
+                <% end %>
+            </td>
+        </tr>
+    <% end %>
+</tbody>
+</table>

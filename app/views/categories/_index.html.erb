@@ -1,0 +1,25 @@
+<table class="table no-more-tables table-striped table-hover" id="category" >
+  <thead>
+    <tr>
+      <th style="width:1%" >
+        <div class="checkbox check-default">
+          <input id="checkbox" type="checkbox" value="1" class="checkall">
+          <label for="checkbox"></label>
+        </div>
+      </th>
+      <th>Category</th>
+      <th>Group</th>
+    </tr>
+  </thead>
+  <tbody id='dataTable' class="searchable">
+    <% if @categories.count > 0 %>
+      <% @categories.each do |category| %>
+        <%= render 'data', :category => category %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5" align="center">No category data found!</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

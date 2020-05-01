@@ -1,0 +1,6 @@
+<li class=""> 
+					<%= link_to asset_assignments_path, class: (controller_name.downcase=="asset_assignments" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Asset Assignment'} do %>
+					<i class="fa fa-th-large"></i>
+					<span class="title" ><%= t(:asset_assignment) %></span>
+					<% end %>
+				</li>

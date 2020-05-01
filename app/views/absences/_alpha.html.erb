@@ -1,0 +1,11 @@
+<tr>
+	<td>
+    	<div class="checkbox check-default">
+            <input id="checkbox<%= alpha.id %>" type="checkbox" value="<%= alpha.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= alpha.id %>"></label>
+        </div>
+    </td>
+    <td><%= alpha.name rescue '' %></td>
+    <td><%= alpha.organization.name rescue '' %></td>
+    <td><%= alpha.shift.name rescue '' %></td>
+</tr>

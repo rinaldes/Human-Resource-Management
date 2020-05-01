@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="#" class="active">Role Management</a></li>
+  </ul>
+  <div class="page-title">
+    <i class="fa fa-user"></i>
+    <h3>Role - <span class="semi-bold">Management</span></h3> 
+  </div>
+  <div class="grid simple">
+    <div class="grid-title no-border"></div>
+    <div class="grid-body no-border">
+      <div class="row toolbar-block">
+        <div class="col-md-4">
+          <div class="dataTables_filter" id="example3_filter">
+            <div class="controls">
+              <div class="input-group">
+                <%= text_field_tag :search, '', class: 'form-control search', placeholder: 'Search Record' %>
+                <span class="input-group-addon ">
+                  <i class="fa fa-search"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="toolbar pull-right" id="toolbar_main">
+            <div class="table-tools-actions">
+              <%= link_to new_role_path, id: "_new", class: "btn btn-success", remote: true do %>
+                Add New <i class="fa fa-plus"></i>
+              <% end %>
+              <div class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="fa fa-gear"></span> <span class="caret"></span></button>
+                  <ul class="dropdown-menu right-edge">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="toolbar pull-right hide" id="toolbar_upload">
+            <div class="table-tools-actions">
+              <button class="btn"><span class="fa fa-cloud-upload"></span> Upload</button>
+              <div class="separator">&nbsp;</div>
+            </div>
+          </div>
+          <div class="toolbar pull-right hide" id="toolbar_def">
+            <div class="table-tools-actions">
+              <button class="btn"><span class="fa fa-edit"></span> Edit</button> 
+                <button class="btn" data-toggle="modal" data-target="#confirm_modal"><span class="fa fa-trash"></span> Remove</button> 
+                <div class="separator">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table no-more-tables table-striped table-hover" id="role_list">
+        <thead>
+          <tr>
+            <th style="width:30%">Name</th>
+            <th style="width: 9%;">Edit</th>
+            <th style="width: 9;">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render 'roles', :roles => @roles %>
+        </tbody>
+      </table>
+      <div class="row dataTables_wrapper"><%= render 'layouts/paging', records: @roles, records_count: @roles_count %></div>
+    </div>
+  </div>
+</div><!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+  <%= render 'new' if @role.present? && action_name == "create" %>
+  <%= render 'edit' if @role.present? && action_name == "update" %>
+</div><!-- modal -->

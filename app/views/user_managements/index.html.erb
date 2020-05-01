@@ -1,0 +1,98 @@
+<%= javascript_tag render(:template => 'user_managements/jsManager.js', :formats => [:js]) %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li> 
+    <li><a href="#" class="active">User Management</a></li>
+  </ul>
+    <div class="page-title">	
+      <i class="fa fa-user"></i>
+      <h3>User - <span class="semi-bold">Management</span></h3>	
+    </div>
+    <div class="grid simple">
+      <div class="grid-title no-border"></div>
+      <div class="grid-body no-border">
+        <div class="row toolbar-block">
+          <div class="col-md-4">
+            <div class="dataTables_filter" id="example3_filter">
+              <div class="controls">
+                <div class="input-group">
+                  <%= text_field_tag :search, '', class: 'form-control search', placeholder: 'Search Record' %>
+                  <span class="input-group-addon ">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="toolbar pull-right" id="toolbar_main">
+              <div class="table-tools-actions">
+                <%= button_to new_user_management_path(:employee_id => params[:format]), :method => 'get', :class => 'btn btn-success', :remote => true do %>
+                  <span class="fa fa-plus"></span> Add New
+                <% end %>
+              </div>
+            </div>
+            <div class="toolbar pull-right hide" id="toolbar_upload">
+              <div class="table-tools-actions">
+                <button class="btn"><span class="fa fa-cloud-upload"></span> Upload</button>
+                <div class="separator">&nbsp;</div>
+              </div>
+            </div>
+            <div class="toolbar pull-right hide" id="toolbar_def">
+                        	<div class="table-tools-actions">
+                            	<button class="btn" id="button_edit" onclick="edit_user()"><span class="fa fa-edit"></span> Edit</button> 
+                                <button class="btn" data-toggle="modal" data-target="#confirm_modal"><span class="fa fa-trash"></span> Remove</button> 
+                                <div class="separator">&nbsp;</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            	<table class="table no-more-tables table-striped table-hover" id='user_management'>
+                    <thead>
+                        <tr>
+                            <th style="width:1%" >
+                                <div class="checkbox check-default">
+                                    <input id="checkbox10" type="checkbox" value="1" class="checkall">
+                                    <label for="checkbox10"></label>
+                  </div>
+                </th>
+                <th style="width:22%">Name</th>
+                <th style="width:22%">Username</th>
+                <th style="width:22%">Email</th>
+                <th style="width:6%">password</th>
+                <th style="width:10%">Role</th>
+                <th style="width:10%">status</th>
+              </tr>
+            </thead>
+            <tbody><%= render partial: 'users_list', locals: {users: @users} %></tbody>
+          </table>
+          <div class="row dataTables_wrapper"><%= render 'layouts/paging', records: @users, records_count: @users_count %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <br>
+          <i class="fa fa-trash-o fa-7x"></i>
+          <h4 id="myModalLabel" class="semi-bold">Are you sure want to remove this item(s)</h4>
+          <!--<p class="no-margin">You'll be charged $29/Month and get immediate access to new plan </p>-->
+          <br>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="delete_user();">Yes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal-dialog -->
+</div>
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+  <%= render 'new' if @organization.present? && action_name == "create" %>
+  <%= render 'edit' if @organization.present? && action_name == "update" %>
+</div>

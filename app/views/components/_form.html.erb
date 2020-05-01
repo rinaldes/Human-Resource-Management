@@ -1,0 +1,34 @@
+<% if params[:action] == "new"%>
+  <tr>
+<% end %>
+  <%= form_for(component, html: { role: "form", multipart: true}, remote: true) do |f| %>
+    <td>
+      <div class="checkbox check-default">
+        <input id="checkbox12" type="checkbox" value="1">
+        <label for="checkbox12"></label>
+      </div>
+    </td>
+    <td>
+      <%= f.text_field :name, :class => "full-width", :placeholder => "Component" %>
+    </td>
+    <td>
+      <% if params[:action] == "new" %>
+			  <%= f.text_area :indicator, :multiple => true, class: "autocomplete-field-input", placeholder: "indicator" %>
+      <% else %>
+        <%= f.text_area :indicator, :multiple => true, class: "autocomplete-field-input", placeholder: "indicator", value: @indicatornya %>
+      <% end %>
+  	</td>
+    <td>
+      <div>
+        <% if params[:action] == "new" %>
+          <%= f.submit "Add", class: "btn btn-success", :onclick => "submit_component();"%>
+        <% else %>
+        <%= f.hidden_field :id, :value => params[:id] %>
+          <%= f.submit "Update", class: "btn btn-success", :onclick => "update_component();"%>
+        <% end %>
+      </div>
+    </td>
+  <% end %>
+<% if params[:action] == "new"%>
+  </tr>
+<% end %>

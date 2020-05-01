@@ -1,0 +1,22 @@
+<% if params[:action] != "update" %>
+    <tr id="data_<%= component.id %>">
+<% end %>
+    <td>
+    	<div class="checkbox check-default">
+            <input id="checkbox<%= component.id %>" type="checkbox" value="<%= component.id %>" onchange="cek_checkbox();">
+            <label for="checkbox<%= component.id %>"></label>
+        </div>
+    </td>
+    <% begin %>
+        <!-- Versi List -->
+        <td><%= component.name %></td>
+        <% @indi = component.indicator.split(";") %>
+        <td><ul><% @indi.each do |indicator| %>
+            <li><%= indicator %></li>
+        <% end %></ul></td>
+    <% rescue %>
+    <% end %>
+
+<% if params[:action] != "update" %>
+    </tr>
+<% end %>

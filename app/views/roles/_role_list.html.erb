@@ -1,0 +1,16 @@
+      <tr id="role_<%= feature.id %>" class="role-table">
+        <th class="feature-name col-md-6"><%= feature.name %></th>
+        <td class="col-md-3"><input type="checkbox" name="options_<%= feature.id %>" class="options_<%= feature.id %>" id="options_<%= feature.id %>" value="read">
+          Read</td>
+        <td class="col-md-3"><input type="checkbox" name="options_<%= feature.id %>" class="options_<%= feature.id %>" id="options_<%= feature.id %>" value="write">
+          Write</td>
+      </tr>
+
+<script type="text/javascript">
+  // Checkbox Only one can checked
+  $(document).ready(function() {
+    $('input.options_<%= feature.id %>').on('change', function() {
+      $('input.options_<%= feature.id %>').not(this).prop('checked', false);
+    });
+  });
+</script>

@@ -1,0 +1,12 @@
+$("#myModal").html("<%= j(render 'edit') %>")
+
+
+<% @role.features.each do |feature|%>
+	<% if feature.feature_group.name == 'read' %>
+		$("#role_<%= feature.feature_name_id %> td:eq(0) input").attr('checked', 'checked')
+	<% else %>
+		$("#role_<%= feature.feature_name_id %> td:eq(1) input").attr('checked', 'checked')
+	<% end %>
+<% end %>
+
+$("#myModal").modal()

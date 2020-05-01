@@ -1,0 +1,6 @@
+<li class=""> 
+	<%= link_to overtime_requests_path, class: (controller_name.downcase=="overtime_requests" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Overtime Request'} do %>
+	<i class="fa fa-clock-o"></i>
+	<span class="title" ><%= t(:overtime_request) %></span>
+	<% end %>
+</li>

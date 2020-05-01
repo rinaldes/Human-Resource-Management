@@ -1,0 +1,102 @@
+<%= tinymce_assets %>
+<div class="container-fluid">
+  <ul class="breadcrumb">
+    <li><p>YOU ARE HERE</p></li>
+    <li><a href="konowledge_management.html">Gallery Photo</a></li>
+    <li><a href="#" class="active">Detail</a></li>
+  </ul>
+  <div class="page-title"> 
+    <i class="fa fa-envelope"></i>
+    <h3>Photo <span class="semi-bold">Gallery</span></h3>
+  </div>
+  <section class="row">
+    <div class="col-sm-9">
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h3 class="semi-bold p-l-10"><%= @photo.caption %></h3>
+          <div class="tools">
+            <%= link_to 'Edit', edit_photo_path(@photo), class: "fa fa-pencil" %>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <div class="gen-form" action="">
+            <div class="form-group">
+              <div class="controls">
+                <div class="controls">
+                <strong>Divisi:</strong>
+                <% @photo.photo_receivers.each do |organization| %>
+                  <span class="label label-info"><%= organization.organization.name %></span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gen-form" action="">
+          <div class="form-group">
+            <div class="controls">
+              <div class="controls">
+                <strong>Activity :</strong>
+                <span class="label label-info"><%= @photo.photo_activity.name rescue '' %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gen-form" action="">
+          <div class="form-group">
+            <div class="controls">
+              <div class="controls">
+              <img id="img_prev" src="<%= @photo.image %>" alt="profile" width='100px' />
+              </div>
+            </div>
+         </div>
+        </div>
+        <article>
+          <%= raw @photo.histories %>
+        </article>
+         <% @comments.each{|comment| %>
+          <%= raw comment.comment %>
+          By <%= "#{comment.user.username} #{time_ago_in_words(comment.created_at)}" %>
+        <% } %>
+        <br />
+      </div>
+    </div>
+  </div>
+  </section>
+      <%= form_for @photo_comment, url: comment_photo_path(@photo), method: 'PUT' do |f| %>
+        <p>
+          <%= f.label :comment %><br>
+          <%= f.text_area :comment,  :id => "text-editor", :placeholder => "Enter text  ...", :class => "tinymce", :rows => "10", :cols => "30" %>
+        </p>
+        <p><%= f.submit "Comment", class: 'btn' %></p>
+      <% end %>
+    </div>
+  </div>
+  <script type="text/javascript">
+    $('#select_send').change(function(){
+      var value = $(this).val();
+      if(value == 'emp'){
+        $('#emp_text').show('fast');
+      }else{
+        $('#emp_text').hide('fast')
+      }
+    });
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $('#img_prev')
+          .attr('src', e.target.result)
+          .width(240)
+          .height(250);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  tinyMCE.init({
+    selector: 'textarea.editor'
+  });
+</script>
+<%= tinymce %>

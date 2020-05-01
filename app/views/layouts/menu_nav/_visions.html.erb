@@ -1,0 +1,94 @@
+<li class="tip " data-toggle="tooltip" data-placement="right" data-original-title="Master Data"> 
+					<a href="#" class=""> <i class="fa fa-th"></i> <span class="title">Master Data </span> </a>
+					<ul class="sub-menu">
+						<li class="">
+							<%= link_to admin_surveys_path, class: (controller_name.downcase=="admin_surveys" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Admin Survey'} do %>
+								<span class="title" ><%= t(:admin_survey) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to visions_path, class: (controller_name.downcase=="visions" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Vision'} do %>
+								<span class="title" ><%= t(:vision) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to misions_path, class: (controller_name.downcase=="misions" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Mision'} do %>
+								<span class="title" ><%= t(:mision) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to cultures_path, class: (controller_name.downcase=="cultures" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Culture'} do %>
+							<span class="title" ><%= t(:culture) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to code_of_conducts_path, class: (controller_name.downcase=="code_of_conducts" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Code of Conduct'} do %>
+								<span class="title" ><%= t(:code_of_conduct) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to values_path, class: (controller_name.downcase=="values" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Value Of Company'} do %>
+								<span class="title" ><%= t(:value) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to attendance_settings_path, class: (controller_name.downcase=="attendance_settings" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Attedance Setting'} do %>
+								<span class="title" ><%= t(:attendance_setting) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to holidays_path, class: (controller_name.downcase=="holidays" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Holiday'} do %>
+								<span class="title" ><%= t(:holidays) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to holiday_types_path, class: (controller_name.downcase=="holiday_types" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Holiday Type'} do %>
+								<span class="title" ><%= t(:holiday_type) %></span>
+							<% end %>
+						</li>
+						<li> <%= link_to shifts_path, class: (controller_name.downcase=="shifts" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Holiday'} do %>
+								<span class="title" ><%= t(:shifts) %></span>
+							<% end %>
+						</li>
+
+						<li class="">
+							<%= link_to organizations_path, class: (controller_name.downcase=="organizations" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Organization'} do %>
+								<span class="title" ><%= t(:organization) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to fingerprints_path, class: (controller_name.downcase=="fingerprints" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Fingerprint'} do %>
+								<span class="title" ><%= t(:fingerprint) %></span>
+							<% end %>
+						</li>
+						<li class="">
+							<%= link_to schedules_path, class: (controller_name.downcase=="schedules" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Schedule'} do %>
+							<span class="title" ><%= t(:schedule) %></span>
+							<% end %>
+						</li>
+						<% begin %>
+						<% if AttendanceSetting.last.appraisal_setting == "component" %>
+						<li class="">
+							<%= link_to components_path, class: (controller_name.downcase=="components" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Component dan Indicator'} do %>
+								<span class="title" ><%= t(:component_indicator) %></span>
+							<% end %>
+						</li>
+						<%end%>
+
+						<% if AttendanceSetting.last.appraisal_setting == "goal_and_value" %>
+						<li class="">
+							<%= link_to goal_values_path, class: (controller_name.downcase=="goal_values" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'goal dan value'} do %>
+								<span class="title" ><%= t(:goal_and_value) %></span>
+							<% end %>
+						</li>
+						<%end%>
+						<% rescue %>
+						<% end %>
+
+						<li class=""> 
+							<%= link_to companies_path, class: (controller_name.downcase=="companies" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Master Company'} do %>
+							<span class="title" ><%= t(:company) %></span>
+							<% end %>
+						</li>
+					</ul>
+				</li>

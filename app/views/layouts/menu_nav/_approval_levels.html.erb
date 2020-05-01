@@ -1,0 +1,6 @@
+<li class=""> 
+	<%= link_to approval_levels_path, class: (controller_name.downcase=="approval_levels" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Approval Level'} do %>
+	<i class="fa fa-check-circle-o"></i>
+	<span class="title" ><%= t(:approval_level) %></span>
+	<%end %>
+</li> 

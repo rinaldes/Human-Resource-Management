@@ -1,0 +1,41 @@
+<% if params[:action] == "new"%>
+  <tr>
+<% end %>
+  <%= form_for(test_result, html: { role: "form", multipart: true}, remote: true) do |f| %>
+  <td>
+    <div class="checkbox check-default">
+          <input id="checkbox12" type="checkbox" value="1">
+          <label for="checkbox12"></label>
+      </div>
+  </td>
+    <td>
+      <%= f.text_field :applicant_name, :class => "full-width", :placeholder => "Applicant Name" %>
+    </td>
+    <td>
+      <%= f.file_field :attachment %>
+    </td>
+    <td>
+      <%= f.text_field :email , :class => "full-width", :placeholder => "Email" %> 
+    </td>
+    <% if params[:action] == "new"%>
+        <%= f.hidden_field :position_id , value: params[:position_id] %>
+        <%= f.hidden_field :recruitment_id , value: params[:recruitment_id] %>
+        <%= f.hidden_field :status , value: "Pending" %>
+        <%= f.hidden_field :cv_status , value: "Pending" %>
+      <% else %>
+        <%= f.hidden_field :id, :value => params[:id] %>
+      <% end %>
+   <td>
+      <span class="badge badge-primary">Generate</span>
+    </td>
+    <td>
+    <% if params[:action] == "new" %>
+      <%= f.submit "Add", class: "btn btn-success" %>
+    <% else %>
+      <%= f.submit "Update", class: "btn btn-success", :onclick => "update_test();" %>
+    <% end %>
+    </td>
+  <% end %>
+<% if params[:action] == "new"%>
+  </tr>
+<% end %>

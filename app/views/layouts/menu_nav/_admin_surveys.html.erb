@@ -1,0 +1,11 @@
+<li class="tip " data-toggle="tooltip" data-placement="right" data-original-title="Master Data"> 
+	<a href="#" class=""> <i class="fa fa-th"></i> <span class="title">Master Data </span> </a>
+	<ul class="sub-menu">
+		<li class="">
+			<%= link_to admin_surveys_path, class: (controller_name.downcase=="admin_surveys" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Admin Survey'} do %>
+				<span class="title" ><%= t(:admin_survey) %></span>
+			<% end %>
+		</li>
+		
+	</ul>
+</li>

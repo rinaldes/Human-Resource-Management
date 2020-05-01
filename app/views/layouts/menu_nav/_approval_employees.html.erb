@@ -1,0 +1,6 @@
+<li class=""> 
+	<%= link_to approval_employees_path, class: (controller_name.downcase=="approval_employees" ? "cur tip" : "tip"), data: {'toogle' => 'tooltip', 'placement' =>'right', 'original-title' => 'Approval Employee'} do %>
+	<i class="fa fa-check-circle-o"></i>
+	<span class="title" ><%= t(:approval_employee) %></span>
+	<% end %>
+</li>

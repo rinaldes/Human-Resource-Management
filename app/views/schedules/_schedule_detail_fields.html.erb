@@ -1,0 +1,23 @@
+<% if params[:action] != "edit" %>
+	<tr>
+	  <td>
+	    <div class="nested-fields addform clearfix">
+	       <%= f.autocomplete_field :employee_id, autocomplete_employee_name_schedules_path, class: "autocomplete-field-input", placeholder: "Employee" %>
+	      <%= link_to_remove_association f do %>    
+	        <i class="fa fa-remove"></i>
+	      <% end %>
+	    </div>
+	  </td>
+	</tr>
+<% else %>
+	<tr>
+	  <td>
+	    <div class="nested-fields addform clearfix">
+	       <%= f.select :employee_id, options_for_select(Employee.all.map{|x| [x.name, x.id]}), {:prompt => '--select--'},{:class => "form-control"}%>
+	      <%= link_to_remove_association f do %>    
+	        <i class="fa fa-remove"></i>
+	      <% end %>
+	    </div>
+	  </td>
+	</tr>
+<% end %>

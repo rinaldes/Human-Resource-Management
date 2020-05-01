@@ -1,0 +1,10 @@
+<!-- START PREVIEW -->
+<div class="live-tile slide" id="dashboard_gallery" data-speed="750" data-delay="4000" data-mode="carousel">
+  <% @photos.each{|photo| %>
+    <div>
+      <img src="<%= photo.image %>" alt="" class="image-responsive-height">
+      <p class="pull-left bold text-white fs-14 p-t-10"><%= photo.caption %></p>
+    </div>
+  <% } %>
+</div>
+<!-- END PREVIEW -->
